@@ -1,0 +1,30 @@
+## Frontend (React avec Clean Architecture)
+src/
+├── assets/                   # Ressources statiques
+├── components/              # Composants React
+│   ├── common/             # Composants réutilisables
+│   │   ├── Button/
+│   │   ├── Form/
+│   │   └── Layout/
+│   ├── features/           # Composants spécifiques aux fonctionnalités
+│   │   ├── planning/
+│   │   ├── absence/
+│   │   └── notes/
+│   └── pages/             # Composants de pages
+├── hooks/                 # Custom hooks React
+│   ├── common/
+│   ├── planning/
+│   └── absence/
+├── services/             # Services d'API et logique métier
+│   ├── api/
+│   │   ├── client.ts
+│   │   └── endpoints.ts
+│   └── domain/
+├── store/                # État global (Redux)
+│   ├── slices/
+│   ├── actions/
+│   └── selectors/
+├── types/               # Types TypeScript
+│   ├── domain/
+│   └── api/
+└── utils/              # Utilitaires

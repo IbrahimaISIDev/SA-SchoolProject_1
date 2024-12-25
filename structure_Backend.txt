@@ -1,0 +1,79 @@
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── Api/
+│   │   │   ├── Auth/
+│   │   │   │   ├── LoginController.php
+│   │   │   │   └── RegisterController.php
+│   │   │   ├── Planning/
+│   │   │   │   ├── CourseController.php
+│   │   │   │   ├── SessionController.php
+│   │   │   │   └── ProfessorController.php
+│   │   │   ├── Absence/
+│   │   │   │   ├── AbsenceController.php
+│   │   │   │   └── JustificationController.php
+│   │   │   └── Notes/
+│   │   │       ├── GradeController.php
+│   │   │       └── ExamController.php
+│   │   └── BaseController.php
+│   ├── Middleware/
+│   │   ├── CheckRole.php
+│   │   └── ValidateSession.php
+│   ├── Requests/
+│   │   ├── Planning/
+│   │   │   ├── CreateCourseRequest.php
+│   │   │   └── UpdateSessionRequest.php
+│   │   └── Validation/
+│   └── Resources/
+│       ├── CourseResource.php
+│       └── UserResource.php
+├── Models/
+│   ├── User.php
+│   ├── Course.php
+│   ├── Session.php
+│   ├── Professor.php
+│   ├── Student.php
+│   ├── Absence.php
+│   └── Grade.php
+├── Services/
+│   ├── Interfaces/
+│   │   ├── ICourseService.php
+│   │   ├── IAbsenceService.php
+│   │   └── IGradeService.php
+│   ├── Planning/
+│   │   ├── CourseService.php
+│   │   └── SessionService.php
+│   ├── Absence/
+│   │   └── AbsenceService.php
+│   └── Grade/
+│       └── GradeService.php
+├── Repositories/
+│   ├── Interfaces/
+│   │   ├── ICourseRepository.php
+│   │   ├── IAbsenceRepository.php
+│   │   └── IGradeRepository.php
+│   ├── Planning/
+│   │   ├── CourseRepository.php
+│   │   └── SessionRepository.php
+│   ├── Absence/
+│   │   └── AbsenceRepository.php
+│   └── Grade/
+│       └── GradeRepository.php
+├── Events/
+│   ├── CourseCreated.php
+│   └── AbsenceThresholdReached.php
+├── Listeners/
+│   ├── SendCourseNotification.php
+│   └── NotifyAbsenceWarning.php
+├── Providers/
+│   ├── RepositoryServiceProvider.php
+│   └── EventServiceProvider.php
+└── Support/
+    ├── Traits/
+    │   ├── HasUuid.php
+    │   └── Filterable.php
+    ├── Enums/
+    │   ├── CourseStatus.php
+    │   └── UserRole.php
+    └── Helpers/
+        └── DateHelper.php
