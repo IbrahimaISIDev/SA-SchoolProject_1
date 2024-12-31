@@ -1,79 +1,159 @@
+# Structure complète de la partie Back-End du projet ISI Suptech
 app/
 ├── Http/
 │   ├── Controllers/
 │   │   ├── Api/
 │   │   │   ├── Auth/
-│   │   │   │   ├── LoginController.php
-│   │   │   │   └── RegisterController.php
-│   │   │   ├── Planning/
-│   │   │   │   ├── CourseController.php
-│   │   │   │   ├── SessionController.php
-│   │   │   │   └── ProfessorController.php
-│   │   │   ├── Absence/
+│   │   │   │   ├── ConnexionController.php
+│   │   │   │   └── InscriptionController.php
+│   │   │   ├── Utilisateurs/
+│   │   │   │   ├── UtilisateurController.php
+│   │   │   │   ├── EtudiantController.php
+│   │   │   │   ├── ProfesseurController.php
+│   │   │   │   ├── ResponsableController.php
+│   │   │   │   └── AttacheController.php
+│   │   │   ├── Academique/
+│   │   │   │   ├── AnneeController.php
+│   │   │   │   ├── SemestreController.php
+│   │   │   │   ├── FiliereController.php
+│   │   │   │   ├── NiveauController.php
+│   │   │   │   └── ModuleController.php
+│   │   │   ├── Planification/
+│   │   │   │   ├── CoursController.php
+│   │   │   │   ├── SeanceController.php
+│   │   │   │   ├── SalleController.php
+│   │   │   │   ├── ClasseController.php
+│   │   │   │   └── DisponibiliteController.php
+│   │   │   ├── Presence/
+│   │   │   │   ├── EmargementController.php
 │   │   │   │   ├── AbsenceController.php
 │   │   │   │   └── JustificationController.php
-│   │   │   └── Notes/
-│   │   │       ├── GradeController.php
-│   │   │       └── ExamController.php
+│   │   │   ├── Evaluation/
+│   │   │   │   ├── DevoirController.php
+│   │   │   │   ├── ExamenController.php
+│   │   │   │   ├── NoteController.php
+│   │   │   │   └── BulletinController.php
+│   │   │   └── Statistiques/
+│   │   │       ├── StatPresenceController.php
+│   │   │       ├── StatPerformanceController.php
+│   │   │       └── RapportController.php
 │   │   └── BaseController.php
 │   ├── Middleware/
-│   │   ├── CheckRole.php
-│   │   └── ValidateSession.php
-│   ├── Requests/
-│   │   ├── Planning/
-│   │   │   ├── CreateCourseRequest.php
-│   │   │   └── UpdateSessionRequest.php
-│   │   └── Validation/
-│   └── Resources/
-│       ├── CourseResource.php
-│       └── UserResource.php
+│   │   ├── VerifierRole.php
+│   │   ├── ValiderSession.php
+│   │   ├── VerifierDelaiEmargement.php  # Pour la règle des 30min
+│   │   └── VerifierSeuilAbsence.php     # Pour les 10h et 20h
+│   └── Requests/
+│       ├── Validation/
+│       ├── Academique/
+│       ├── Planification/
+│       ├── Presence/
+│       └── Evaluation/
 ├── Models/
-│   ├── User.php
-│   ├── Course.php
-│   ├── Session.php
-│   ├── Professor.php
-│   ├── Student.php
-│   ├── Absence.php
-│   └── Grade.php
+│   ├── Utilisateurs/
+│   │   ├── Utilisateur.php
+│   │   ├── Etudiant.php
+│   │   ├── Professeur.php
+│   │   ├── Responsable.php
+│   │   └── Attache.php
+│   ├── Academique/
+│   │   ├── AnneeAcademique.php
+│   │   ├── Semestre.php
+│   │   ├── Filiere.php
+│   │   ├── Niveau.php
+│   │   └── Module.php
+│   ├── Planification/
+│   │   ├── Cours.php
+│   │   ├── Seance.php
+│   │   ├── Salle.php
+│   │   ├── Classe.php
+│   │   └── Disponibilite.php
+│   ├── Presence/
+│   │   ├── Emargement.php
+│   │   ├── Absence.php
+│   │   └── Justification.php
+│   └── Evaluation/
+│       ├── Devoir.php
+│       ├── Examen.php
+│       ├── Note.php
+│       └── Bulletin.php
 ├── Services/
-│   ├── Interfaces/
-│   │   ├── ICourseService.php
-│   │   ├── IAbsenceService.php
-│   │   └── IGradeService.php
-│   ├── Planning/
-│   │   ├── CourseService.php
-│   │   └── SessionService.php
-│   ├── Absence/
-│   │   └── AbsenceService.php
-│   └── Grade/
-│       └── GradeService.php
+│   ├── Utilisateurs/
+│   │   ├── ServiceUtilisateur.php
+│   │   ├── ServiceEtudiant.php
+│   │   ├── ServiceProfesseur.php
+│   │   ├── ServiceResponsable.php
+│   │   └── ServiceAttache.php
+│   ├── Academique/
+│   │   ├── ServiceAnnee.php
+│   │   └── ServiceSemestre.php
+│   ├── Planification/
+│   │   ├── ServiceCours.php
+│   │   ├── ServiceSeance.php
+│   │   └── ServiceDisponibilite.php
+│   ├── Presence/
+│   │   ├── ServiceEmargement.php
+│   │   ├── ServiceAbsence.php
+│   │   └── ServiceNotification.php
+│   └── Evaluation/
+│       ├── ServiceNote.php
+│       └── ServiceBulletin.php
 ├── Repositories/
 │   ├── Interfaces/
-│   │   ├── ICourseRepository.php
-│   │   ├── IAbsenceRepository.php
-│   │   └── IGradeRepository.php
-│   ├── Planning/
-│   │   ├── CourseRepository.php
-│   │   └── SessionRepository.php
-│   ├── Absence/
-│   │   └── AbsenceRepository.php
-│   └── Grade/
-│       └── GradeRepository.php
+│   │   ├── IUtilisateurRepository.php
+│   │   ├── ICoursRepository.php
+│   │   └── IPresenceRepository.php
+│   ├── Utilisateurs/
+│   ├── Academique/
+│   ├── Planification/
+│   ├── Presence/
+│   └── Evaluation/
 ├── Events/
-│   ├── CourseCreated.php
-│   └── AbsenceThresholdReached.php
+│   ├── Academique/
+│   │   └── AnneeCreee.php
+│   ├── Presence/
+│   │   ├── SeuilAbsenceAtteint.php
+│   │   └── EmargementValide.php
+│   └── Cours/
+│       ├── SeanceCreee.php
+│       ├── SeanceAnnulee.php
+│       └── SeanceValidee.php
 ├── Listeners/
-│   ├── SendCourseNotification.php
-│   └── NotifyAbsenceWarning.php
-├── Providers/
-│   ├── RepositoryServiceProvider.php
-│   └── EventServiceProvider.php
+│   ├── EnvoyerAvertissementAbsence.php
+│   ├── EnvoyerConvocation.php
+│   ├── NotifierModificationSeance.php
+│   └── ValiderEmargement.php
+├── Notifications/
+│   ├── NotificationAvertissement.php
+│   ├── NotificationConvocation.php
+│   ├── NotificationModificationSeance.php
+│   └── NotificationPublication.php
+├── Resources/
+│   └── Api/
+│       ├── UtilisateurResource.php
+│       ├── CoursResource.php
+│       └── PresenceResource.php
+├── Database/
+│   └── Migrations/
+│       ├── create_utilisateurs_tables.php
+│       ├── create_academique_tables.php
+│       ├── create_planification_tables.php
+│       ├── create_presence_tables.php
+│       └── create_evaluation_tables.php
 └── Support/
+    ├── Exports/
+    │   ├── ExportBulletin.php
+    │   └── ExportPresence.php
+    ├── Imports/
+    │   └── ImportEtudiant.php
     ├── Traits/
-    │   ├── HasUuid.php
-    │   └── Filterable.php
-    ├── Enums/
-    │   ├── CourseStatus.php
-    │   └── UserRole.php
-    └── Helpers/
-        └── DateHelper.php
+    │   ├── AvecUuid.php
+    │   ├── Filtrable.php
+    │   └── AvecPieceJointe.php
+    └── Enums/
+        ├── TypeUtilisateur.php
+        ├── StatutUtilisateur.php
+        ├── StatutCours.php
+        ├── TypeSeance.php
+        ├── StatutAbsence.php
+        └── StatutJustification.php
