@@ -23,10 +23,16 @@ export const Select = ({
 export const SelectTrigger = ({
   children,
   className,
+  id,
 }: {
   children: React.ReactNode;
   className?: string;
-}) => <div className={`relative ${className}`}>{children}</div>;
+  id: string;
+}) => (
+  <div id={id} className={`relative ${className}`}>
+    {children}
+  </div>
+);
 
 export const SelectContent = ({
   children,

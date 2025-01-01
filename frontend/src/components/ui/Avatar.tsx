@@ -3,12 +3,14 @@ import React from 'react';
 export const Avatar = ({
   children,
   className,
+  ...props
 }: {
   children: React.ReactNode;
   className?: string;
-}) => (
+} & React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={`relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full ${className}`}
+    {...props} // Permet de propager des propriétés comme onClick
   >
     {children}
   </div>

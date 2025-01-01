@@ -52,11 +52,14 @@ export const TableBody = ({
 export const TableCell = ({
   children,
   className,
+  colSpan,
 }: {
   children: React.ReactNode;
   className?: string;
+  colSpan?: number;
 }) => (
   <td
+    colSpan={colSpan} // Ajout de colSpan ici
     className={`px-6 py-4 whitespace-nowrap text-sm text-gray-900 ${className}`}
   >
     {children}

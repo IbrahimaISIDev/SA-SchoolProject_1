@@ -1,6 +1,13 @@
 // src/components/parametres/forms/AnneScolaireForm.tsx
-import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '../../../ui/card';
+import React, { useState, useEffect } from 'react';
+import { AlertCircle, Plus, Trash2 } from 'lucide-react';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from '../../../ui/card';
 import { Button } from '../../../ui/button';
 import { Input } from '../../../ui/input';
 import { Label } from '../../../ui/label';
@@ -12,30 +19,70 @@ import {
   TableBody,
   TableCell,
 } from '../../../ui/table';
+import { Alert, AlertDescription } from '../../../ui/alert';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface AnneeScolaire {
+  id: number;
+  annee: string;
+  dateDebut: string;
+}
 
 const AnneScolaireForm = () => {
-  const [anneesScolaires, setAnneesScolaires] = useState([]);
+  const [anneesScolaires, setAnneesScolaires] = useState<AnneeScolaire[]>([]);
   const [newAnnee, setNewAnnee] = useState({
     annee: '',
     dateDebut: '',
   });
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    if (!newAnnee.annee) {
+      setError('Veuillez saisir une année scolaire');
+      return false;
+    }
+    if (!newAnnee.dateDebut) {
+      setError('Veuillez sélectionner une date de début');
+      return false;
+    }
+    if (!newAnnee.annee.match(/^\d{4}-\d{4}$/)) {
+      setError("Le format de l'année doit être YYYY-YYYY");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newAnnee.annee || !newAnnee.dateDebut) return;
+    setError('');
 
-    setAnneesScolaires([...anneesScolaires, { ...newAnnee, id: Date.now() }]);
+    if (!validateForm()) return;
+
+    const newEntry = { ...newAnnee, id: Date.now() };
+    setAnneesScolaires((prev) => [...prev, newEntry]);
     setNewAnnee({ annee: '', dateDebut: '' });
   };
 
   return (
     <div className="space-y-6">
-      <Card>
+      <Card className="border-t-4 border-t-blue-500 shadow-md">
         <CardHeader>
-          <CardTitle>Ajouter une nouvelle année scolaire</CardTitle>
+          <CardTitle className="text-xl text-blue-700">
+            Ajouter une nouvelle année scolaire
+          </CardTitle>
+          <CardDescription>
+            Définissez la période scolaire et sa date de début
+          </CardDescription>
         </CardHeader>
+
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="annee">Année</Label>
@@ -70,40 +117,57 @@ const AnneScolaireForm = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="shadow-md">
         <CardHeader>
-          <CardTitle>Liste des années scolaires</CardTitle>
+          <CardTitle className="text-xl">Liste des années scolaires</CardTitle>
+          <CardDescription>
+            {anneesScolaires.length} année(s) scolaire(s) enregistrée(s)
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-lg border">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Année</TableHead>
-                  <TableHead>Date de début</TableHead>
-                  <TableHead>Actions</TableHead>
+                <TableRow className="bg-gray-50">
+                  <TableHead className="font-semibold">Année</TableHead>
+                  <TableHead className="font-semibold">Date de début</TableHead>
+                  <TableHead className="font-semibold">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {anneesScolaires.map((annee) => (
-                  <TableRow key={annee.id}>
-                    <TableCell>{annee.annee}</TableCell>
-                    <TableCell>{annee.dateDebut}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() =>
-                          setAnneesScolaires(
-                            anneesScolaires.filter((a) => a.id !== annee.id),
-                          )
-                        }
-                      >
-                        Supprimer
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                <AnimatePresence>
+                  {anneesScolaires.map((annee) => (
+                    <motion.tr
+                      key={annee.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="border-t hover:bg-gray-50 transition-colors"
+                    >
+                      <TableCell className="font-medium">
+                        {annee.annee}
+                      </TableCell>
+                      <TableCell>
+                        {new Date(annee.dateDebut).toLocaleDateString('fr-FR')}
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() =>
+                            setAnneesScolaires((prev) =>
+                              prev.filter((a) => a.id !== annee.id),
+                            )
+                          }
+                          className="group"
+                        >
+                          <Trash2 className="w-4 h-4 mr-1 group-hover:scale-110 transition-transform" />
+                          Supprimer
+                        </Button>
+                      </TableCell>
+                    </motion.tr>
+                  ))}
+                </AnimatePresence>
               </TableBody>
             </Table>
           </div>

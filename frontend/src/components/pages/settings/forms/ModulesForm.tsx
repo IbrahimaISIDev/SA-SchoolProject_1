@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AlertCircle, Plus, Trash2, School } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../ui/card';
 import {
   Table,
@@ -18,105 +19,137 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../../../ui/select';
+import { Alert, AlertDescription } from '../../../ui/alert';
 
-const ModulesForm = () => {
-  const [modules, setModules] = useState([]);
-  const [newModule, setNewModule] = useState({
-    nom: '',
+interface Classe {
+  id: number;
+  niveau: string;
+  filiere: string;
+  capacite: string;
+}
+
+const ClassesForm = () => {
+  const [classes, setClasses] = useState<Classe[]>([]);
+  const [newClasse, setNewClasse] = useState({
     niveau: '',
-    coefficient: '',
-    heures: '',
+    filiere: '',
+    capacite: '',
   });
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const niveaux = ['1ère année', '2ème année', '3ème année'];
+
+  const validateForm = () => {
+    if (!newClasse.niveau) {
+      setError('Veuillez sélectionner un niveau');
+      return false;
+    }
+    if (!newClasse.filiere) {
+      setError('Veuillez saisir une filière');
+      return false;
+    }
+    if (!newClasse.capacite || parseInt(newClasse.capacite) <= 0) {
+      setError('Veuillez saisir une capacité valide');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      !newModule.nom ||
-      !newModule.niveau ||
-      !newModule.coefficient ||
-      !newModule.heures
-    )
-      return;
+    setError('');
 
-    setModules([...modules, { ...newModule, id: Date.now() }]);
-    setNewModule({ nom: '', niveau: '', coefficient: '', heures: '' });
+    if (!validateForm()) return;
+
+    setClasses((prev) => [...prev, { ...newClasse, id: Date.now() }]);
+    setNewClasse({ niveau: '', filiere: '', capacite: '' });
+  };
+
+  const handleCapaciteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === '' || /^\d+$/.test(value)) {
+      setNewClasse({ ...newClasse, capacite: value });
+    }
   };
 
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader>
-          <CardTitle>Ajouter un nouveau module</CardTitle>
+        <CardHeader className="flex flex-row items-center space-y-0 gap-4">
+          <School className="w-6 h-6 text-blue-500" />
+          <CardTitle>Ajouter une nouvelle classe</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="nom">Nom du module</Label>
-                <Input
-                  id="nom"
-                  value={newModule.nom}
-                  onChange={(e) =>
-                    setNewModule({ ...newModule, nom: e.target.value })
-                  }
-                  placeholder="Ex: Algorithmique"
-                  className="w-full"
-                />
-              </div>
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="niveau">Niveau</Label>
+                <Label htmlFor="niveau" className="font-medium">
+                  Niveau
+                </Label>
                 <Select
-                  value={newModule.niveau}
+                  value={newClasse.niveau}
                   onValueChange={(value) =>
-                    setNewModule({ ...newModule, niveau: value })
+                    setNewClasse({ ...newClasse, niveau: value })
                   }
                 >
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger id="niveau" className="w-full">
                     <SelectValue placeholder="Sélectionner le niveau" />
                   </SelectTrigger>
                   <SelectContent>
-                    {['1ère année', '2ème année', '3ème année'].map(
-                      (niveau) => (
-                        <SelectItem key={niveau} value={niveau}>
-                          {niveau}
-                        </SelectItem>
-                      ),
-                    )}
+                    {niveaux.map((niveau) => (
+                      <SelectItem
+                        key={niveau}
+                        value={niveau}
+                        className="cursor-pointer hover:bg-blue-50"
+                      >
+                        {niveau}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="coefficient">Coefficient</Label>
+                <Label htmlFor="filiere" className="font-medium">
+                  Filière
+                </Label>
                 <Input
-                  id="coefficient"
-                  type="number"
-                  value={newModule.coefficient}
+                  id="filiere"
+                  value={newClasse.filiere}
                   onChange={(e) =>
-                    setNewModule({ ...newModule, coefficient: e.target.value })
+                    setNewClasse({ ...newClasse, filiere: e.target.value })
                   }
-                  placeholder="Ex: 2"
+                  placeholder="Ex: Informatique"
                   className="w-full"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="heures">Volume horaire</Label>
+                <Label htmlFor="capacite" className="font-medium">
+                  Capacité
+                </Label>
                 <Input
-                  id="heures"
+                  id="capacite"
                   type="number"
-                  value={newModule.heures}
-                  onChange={(e) =>
-                    setNewModule({ ...newModule, heures: e.target.value })
-                  }
-                  placeholder="Nombre d'heures"
+                  min="1"
+                  value={newClasse.capacite}
+                  onChange={handleCapaciteChange}
+                  placeholder="Nombre d'étudiants"
                   className="w-full"
                 />
               </div>
             </div>
+
             <Button type="submit" className="w-full md:w-auto">
-              Ajouter le module
+              <Plus className="w-4 h-4 mr-2" />
+              Ajouter la classe
             </Button>
           </form>
         </CardContent>
@@ -124,40 +157,58 @@ const ModulesForm = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Liste des modules</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle>Liste des classes</CardTitle>
+            <span className="text-sm text-gray-500">
+              {classes.length} classe(s)
+            </span>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Nom</TableHead>
                   <TableHead>Niveau</TableHead>
-                  <TableHead>Coefficient</TableHead>
-                  <TableHead>Volume horaire</TableHead>
+                  <TableHead>Filière</TableHead>
+                  <TableHead>Capacité</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {modules.map((module) => (
-                  <TableRow key={module.id}>
-                    <TableCell>{module.nom}</TableCell>
-                    <TableCell>{module.niveau}</TableCell>
-                    <TableCell>{module.coefficient}</TableCell>
-                    <TableCell>{module.heures}h</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() =>
-                          setModules(modules.filter((m) => m.id !== module.id))
-                        }
-                      >
-                        Supprimer
-                      </Button>
+                {classes.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={4}
+                      className="text-center text-gray-500 py-4"
+                    >
+                      Aucune classe enregistrée
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  classes.map((classe) => (
+                    <TableRow key={classe.id} className="group">
+                      <TableCell>{classe.niveau}</TableCell>
+                      <TableCell>{classe.filiere}</TableCell>
+                      <TableCell>{classe.capacite} étudiants</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() =>
+                            setClasses((prev) =>
+                              prev.filter((c) => c.id !== classe.id),
+                            )
+                          }
+                          className="opacity-70 group-hover:opacity-100"
+                        >
+                          <Trash2 className="w-4 h-4 mr-1" />
+                          Supprimer
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </div>
@@ -167,4 +218,4 @@ const ModulesForm = () => {
   );
 };
 
-export default ModulesForm;
+export default ClassesForm;
