@@ -1,7 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importer le hook
 
 const LoginPage = () => {
+  const navigate = useNavigate(); // Hook pour la navigation
+
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -13,6 +16,11 @@ const LoginPage = () => {
     e.preventDefault();
     // Handle login logic here
   };
+
+  // Gestion des boutons
+  const handleLogin = () => navigate('/dashboard'); // Page principale après connexion
+  const handleStudentLogin = () => navigate('/etudiant-login'); // Redirection pour étudiant
+  const handleProfessorLogin = () => navigate('/professeur-login'); // Redirection pour professeur
 
   return (
     <div
@@ -26,8 +34,8 @@ const LoginPage = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-gray-700"></div>
           <div className="relative z-10 px-8 py-10">
             <div className="text-center mb-8">
-              <h1 className="text-5xl font-extrabold text-white mb-2 font-playfair">
-                Ecole 221
+              <h1 className="text-5xl font-extrabold text-white mb-4 font-playfair">
+                ISI Suptech
               </h1>
               <p className="text-xl text-blue-200">
                 Votre plateforme de gestion éducative
@@ -119,10 +127,26 @@ const LoginPage = () => {
               </div>
 
               <button
-                type="submit"
+                type="button"
+                onClick={handleLogin} // Redirection après connexion
                 className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               >
                 <i className="fas fa-sign-in-alt mr-2"></i> Se Connecter
+              </button>
+              <button
+                type="button"
+                onClick={handleStudentLogin} // Redirection vers login étudiant
+                className="w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200 ease-in-out mt-4"
+              >
+                <i className="fas fa-user-graduate mr-2"></i> Connexion Étudiant
+              </button>
+              <button
+                type="button"
+                onClick={handleProfessorLogin} // Redirection vers login professeur
+                className="w-full py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-200 ease-in-out mt-4"
+              >
+                <i className="fas fa-chalkboard-teacher mr-2"></i> Connexion
+                Professeur
               </button>
             </form>
           </div>

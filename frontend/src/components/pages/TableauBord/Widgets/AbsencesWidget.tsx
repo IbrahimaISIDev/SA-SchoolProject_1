@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { AlertCircle, ChevronUp, Users } from 'lucide-react';
 
 interface AbsenceStats {
@@ -22,6 +23,12 @@ const AbsencesWidget = () => {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold text-gray-800">Absences</h2>
         <span className="text-sm text-gray-500">Ce mois</span>
+        <Link
+          to="/stat-absences"
+          className="text-blue-600 text-sm hover:underline"
+        >
+          Détails
+        </Link>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

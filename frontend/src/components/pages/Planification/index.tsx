@@ -8,6 +8,8 @@ import {
   Users,
   Clock,
   MoreVertical,
+  Edit,
+  Trash2,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '../../ui/card';
@@ -250,10 +252,10 @@ export default function Planification() {
                   <td className="px-6 py-4">
                     <div className="flex space-x-3">
                       <button className="text-indigo-600 hover:text-indigo-800 font-medium transition duration-150">
-                        Modifier
+                        <Edit size={18} />
                       </button>
                       <button className="text-red-600 hover:text-red-800 font-medium transition duration-150">
-                        Supprimer
+                        <Trash2 size={18} />
                       </button>
                     </div>
                   </td>

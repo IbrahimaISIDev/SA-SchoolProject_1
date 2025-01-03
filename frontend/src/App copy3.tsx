@@ -33,23 +33,6 @@ import ProchainsCoursPage from './components/pages/Planification/ProchainsCoursP
 import ProfilProfesseur from './components/fonctionnalites/utilisateurs/ProfilProfesseur';
 import ProfilEtudiant from './components/fonctionnalites/utilisateurs/ProfilEtudiant';
 import DocumentsAdministratifs from './components/fonctionnalites/utilisateurs/ProfilEtudiant/DocumentsAdministratifs';
-import CalendrierEtudiant from './components/fonctionnalites/planification/Calendrier/CalendrierEtudiant';
-import CalendrierProfesseur from './components/fonctionnalites/planification/Calendrier/CalendrierProfesseur';
-import GestionNotesCRUD from './components/pages/Notes/GestionNotes';
-import StatistiquesAbsences from './components/fonctionnalites/absences/StatistiquesAbsences';
-import StudentAbsenceView from './components/fonctionnalites/absences/FeuillePresence/absencesEtudiants';
-import FormulaireJustification from './components/fonctionnalites/absences/FormulaireJustification';
-import StudentGradesView from './components/fonctionnalites/notes/VueNotesEtudiants';
-import MessageView from './components/pages/messages/MessagesEtudiants';
-import AssignmentSubmission from './components/fonctionnalites/utilisateurs/ProfilEtudiant/SoumissionTraveaux';
-import ProfessorMessaging from './components/pages/messages/MessagesProfesseurs';
-import AdminMessaging from './components/pages/messages/MessagesAdmins';
-import LeaveRequest from './components/fonctionnalites/utilisateurs/ProfilProfesseur/MesAbsences';
-import GradeManagement from './components/fonctionnalites/utilisateurs/ProfilProfesseur/MesEvaluations';
-import ProfessorClasses from './components/fonctionnalites/utilisateurs/ProfilProfesseur/MesClasses';
-import ProfessorCourses from './components/fonctionnalites/utilisateurs/ProfilProfesseur/MesCours';
-import DocumentsAdministratifsProfs from './components/fonctionnalites/utilisateurs/ProfilProfesseur/MesDocuments';
-import DocumentsAdministratifsEtudiants from './components/fonctionnalites/utilisateurs/ProfilEtudiant/MesDocuments';
 
 function AppContent() {
   const { sidebarOpen } = useLayout();
@@ -97,8 +80,6 @@ function AppContent() {
             <Route path="/parametres" element={<Parametres />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/prochains-cours" element={<ProchainsCoursPage />} />
-            <Route path="/stat-absences" element={<StatistiquesAbsences />} />
-            <Route path="/admins/messages" element={<AdminMessaging />} />
             <Route
               path="/planification/gestion-cours"
               element={<GestionCours />}
@@ -128,47 +109,7 @@ function AppContent() {
             />
             <Route path="/admin/profil" element={<ProfilAdministrateur />} />
             <Route path="/etudiant-login" element={<ProfilEtudiant />} />
-            <Route path="/etudiant/absences" element={<StudentAbsenceView />} />
-            <Route path="/etudiant/notes" element={<StudentGradesView />} />
-            <Route path="/etudiant/messages" element={<MessageView />} />
-            <Route
-              path="/etudiant/traveaux"
-              element={<AssignmentSubmission />}
-            />
-            {/* <Route
-              path="/etudiant/documents"
-              element={<DocumentsAdministratifs />}
-            /> */}
-            <Route
-              path="/etudiant/documents"
-              element={<DocumentsAdministratifsEtudiants />}
-            />
-            <Route
-              path="/etudiant/justifications"
-              element={<FormulaireJustification />}
-            />
-            <Route
-              path="/etudiant/emploi-du-temps"
-              element={<CalendrierEtudiant />}
-            />
             <Route path="/professeur-login" element={<ProfilProfesseur />} />
-            {/* <Route path="/professeur/notes" element={<GestionNotesCRUD />} /> */}
-            <Route path="/professeur/annulations" element={<LeaveRequest />} />
-            <Route path="/professeur/notes" element={<GradeManagement />} />
-            <Route path="/professeur/classes" element={<ProfessorClasses />} />
-            <Route path="/professeur/cours" element={<ProfessorCourses />} />
-            <Route
-              path="/professeur/documents"
-              element={<DocumentsAdministratifsProfs />}
-            />
-            <Route
-              path="/professeur/messages"
-              element={<ProfessorMessaging />}
-            />
-            <Route
-              path="/professeur/emploi-du-temps"
-              element={<CalendrierProfesseur />}
-            />
             <Route
               path="/documents/carte-etudiant"
               element={<DocumentsAdministratifs />}

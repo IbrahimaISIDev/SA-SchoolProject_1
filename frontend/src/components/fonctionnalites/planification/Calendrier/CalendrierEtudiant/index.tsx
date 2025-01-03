@@ -3,6 +3,7 @@ import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import VueJournaliere from './VueJournaliere';
 import VueHebdomadaire from './VueHebdomadaire';
 import FiltresCalendrier from './FiltresCalendrier';
+import MenuLateralEtudiant from '../../../../common/Disposition/MenuEtudiant';
 
 // Types pour les cours
 type Cours = {
@@ -52,6 +53,7 @@ export default function CalendrierEtudiant() {
 
   return (
     <div className="bg-white rounded-lg shadow">
+      <MenuLateralEtudiant />
       {/* En-tête du calendrier */}
       <div className="p-4 border-b">
         <div className="flex items-center justify-between mb-4">
@@ -103,10 +105,8 @@ export default function CalendrierEtudiant() {
           </div>
         </div>
       </div>
-
       {/* Filtres */}
       <FiltresCalendrier filtres={filtres} setFiltres={setFiltres} />
-
       {/* Vue du calendrier */}
       <div className="p-4">
         {vueActuelle === 'journaliere' ? (

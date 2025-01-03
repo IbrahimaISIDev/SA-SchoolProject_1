@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import VueHebdomadaire from './VueHebdomadaire';
+import MenuLateralProfesseur from '../../../../common/Disposition/MenuProfesseur';
 
 export default function CalendrierProfesseur() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -34,6 +35,7 @@ export default function CalendrierProfesseur() {
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
+      <MenuLateralProfesseur />
       {/* En-tête du calendrier */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">

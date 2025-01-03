@@ -7,7 +7,9 @@ import {
   Calendar,
   Building2,
   Settings,
+  ArrowLeft,
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { TabButton } from './navigation/TabButton';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '../../ui/card';
@@ -28,6 +30,7 @@ const tabs = [
 type TabId = (typeof tabs)[number]['id'];
 
 const Parametres = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabId>('annee');
 
   const containerVariants = {
@@ -39,16 +42,22 @@ const Parametres = () => {
   return (
     <div className="p-6">
       <div className="mb-6">
-        {/* En-tête */}
-        <div className="flex items-center space-x-4 mb-8">
-          <div className="bg-blue-600 p-3 rounded-lg">
-            <Settings className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Paramètres</h1>
-            <p className="text-gray-500 mt-1">
-              Gestion des ressources pédagogiques
-            </p>
+        {/* En-tête avec fond dégradé */}
+        <div className="mb-8 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-6 text-white shadow-lg">
+          <div className="flex items-center">
+            <button
+              onClick={() => navigate(-1)}
+              className="bg-white/20 mr-4 hover:bg-white/30 transition p-2 rounded-lg"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div>
+              {/* <Settings className="w-6 h-6 text-white" /> */}
+              <h1 className="text-3xl font-bold">Paramètres</h1>
+              <p className="mt-2 text-blue-100">
+                Gestion des ressources pédagogiques
+              </p>
+            </div>
           </div>
         </div>
 
