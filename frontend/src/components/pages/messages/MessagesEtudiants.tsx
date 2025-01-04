@@ -5,7 +5,6 @@ import { useLayout } from '../../../contexts/LayoutContext';
 
 export default function MessageView() {
   const { sidebarOpen } = useLayout();
-
   const messages = [
     {
       id: 1,
