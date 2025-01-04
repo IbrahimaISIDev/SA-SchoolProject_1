@@ -22,7 +22,7 @@ const VueHebdomadaire = ({ date, filtres, onNavigate }: Props) => {
     'Samedi',
   ];
   const heures = Array.from(
-    { length: 12 },
+    { length: 14 },
     (_, i) => `${(i + 8).toString().padStart(2, '0')}:00`,
   );
 
@@ -31,7 +31,7 @@ const VueHebdomadaire = ({ date, filtres, onNavigate }: Props) => {
     {
       id: 1,
       module: 'Développement Web',
-      professeur: 'Dr. Diallo',
+      professeur: 'Coach Wane',
       salle: 'Salle 101',
       debut: '08:30',
       fin: '10:30',
@@ -41,12 +41,23 @@ const VueHebdomadaire = ({ date, filtres, onNavigate }: Props) => {
     {
       id: 2,
       module: 'Base de données',
-      professeur: 'Pr. Ndiaye',
+      professeur: 'Coach Aly',
       salle: 'Salle 203',
       debut: '11:00',
       fin: '13:00',
       jour: 'Mardi',
       type: 'TD',
+    },
+    {
+      id: 3,
+      module: 'Langage C',
+      professeur: 'Coach Wane',
+      salle: 'Salle 2',
+      debut: '08:00',
+      fin: '10:00',
+      jour: 'Mercredi',
+      description: 'Introduction au Langage C',
+      type: 'TP',
     },
   ];
 

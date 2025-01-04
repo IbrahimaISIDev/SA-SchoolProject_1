@@ -106,10 +106,10 @@ const MenuLateral = () => {
           <div
             className={`flex items-center space-x-2 ${!sidebarOpen ? 'scale-0 w-0' : 'scale-100'} transition-transform duration-300`}
           >
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-              <span className="text-white font-bold">IS</span>
+            <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+              <span className="text-white text-lg font-bold">SA</span>
             </div>
-            <h1 className="text-lg font-bold text-gray-900">ISI Suptech</h1>
+            <h1 className="text-lg font-bold text-gray-900">Sonatel Academy</h1>
           </div>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}

@@ -101,8 +101,8 @@ const MenuLateralEtudiant = () => {
           <div
             className={`flex items-center space-x-2 ${!sidebarOpen ? 'scale-0 w-0' : 'scale-100'} transition-transform duration-300`}
           >
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-              <span className="text-white font-bold">IS</span>
+            <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+              <span className="text-white text-lg font-bold">SA</span>
             </div>
             <h1 className="text-lg font-bold text-gray-900">Espace Étudiant</h1>
           </div>
@@ -173,7 +173,7 @@ const MenuLateralEtudiant = () => {
             <div className="flex items-center space-x-4">
               <div className="text-right">
                 <p className="text-lg font-semibold text-gray-900">
-                  Fatou Diallo
+                  Ousseynou Diedhiou
                 </p>
                 <p className="text-md text-gray-500">Étudiant - Licence 3-GL</p>
               </div>

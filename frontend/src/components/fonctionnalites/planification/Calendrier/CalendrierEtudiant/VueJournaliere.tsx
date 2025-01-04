@@ -18,7 +18,7 @@ const VueJournaliere = ({ date, filtres, onNavigate }: Props) => {
     {
       id: 1,
       module: 'Développement Web',
-      professeur: 'Dr. Diallo',
+      professeur: 'Coach Wane',
       salle: 'Salle 101',
       debut: '08:30',
       fin: '10:30',
@@ -28,12 +28,22 @@ const VueJournaliere = ({ date, filtres, onNavigate }: Props) => {
     {
       id: 2,
       module: 'Base de données',
-      professeur: 'Pr. Ndiaye',
+      professeur: 'Coach Aly',
       salle: 'Salle 203',
       debut: '11:00',
       fin: '13:00',
       description: 'Introduction à PostgreSQL',
       type: 'TD',
+    },
+    {
+      id: 3,
+      module: 'Langage C',
+      professeur: 'Coach Wane',
+      salle: 'Salle 2',
+      debut: '13:00',
+      fin: '15:00',
+      description: 'Introduction au Langage C',
+      type: 'TP',
     },
   ];
 

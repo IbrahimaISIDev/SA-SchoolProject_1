@@ -17,7 +17,7 @@ export default function MessageView() {
     },
     {
       id: 2,
-      sender: 'M.Seck',
+      sender: 'Coach Wane',
       subject: 'Devoir à rendre',
       content: "N'oubliez pas de rendre le devoir de...",
       date: '2024-01-01',
@@ -26,7 +26,7 @@ export default function MessageView() {
     },
     {
       id: 2,
-      sender: 'M.Robert',
+      sender: 'Coach Aly',
       subject: 'Projet à rendre',
       content: "N'oubliez pas de rendre le projet de Python",
       date: '2024-01-01',

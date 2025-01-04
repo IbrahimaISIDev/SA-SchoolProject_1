@@ -20,8 +20,8 @@ export default function AssignmentSubmission() {
   });
 
   const courses = [
-    { id: 1, name: 'Développement Web', professor: 'M.Ndiaye' },
-    { id: 2, name: 'Base de données', professor: 'M.Robert' },
+    { id: 1, name: 'Développement Web', professor: 'Coach Wane' },
+    { id: 2, name: 'Base de données', professor: 'Coach Aly' },
   ];
 
   const handleFileChange = (e) => {

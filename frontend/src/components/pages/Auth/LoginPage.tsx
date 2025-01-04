@@ -35,7 +35,7 @@ const LoginPage = () => {
           <div className="relative z-10 px-8 py-10">
             <div className="text-center mb-8">
               <h1 className="text-5xl font-extrabold text-white mb-4 font-playfair">
-                ISI Suptech
+                Sonatel Academy
               </h1>
               <p className="text-xl text-blue-200">
                 Votre plateforme de gestion éducative
@@ -131,7 +131,8 @@ const LoginPage = () => {
                 onClick={handleLogin} // Redirection après connexion
                 className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               >
-                <i className="fas fa-sign-in-alt mr-2"></i> Se Connecter
+                {/* <i className="fas fa-sign-in-alt mr-2"></i> Se Connecter */}
+                <i className="fas fa-sign-in-alt mr-2"></i> Connexion Admin
               </button>
               <button
                 type="button"

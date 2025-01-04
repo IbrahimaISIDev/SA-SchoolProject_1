@@ -1,23 +1,13 @@
 import React, { useState } from 'react';
-import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, Layout } from 'lucide-react';
+import { useLayout } from '../../../../../contexts/LayoutContext';
 import VueJournaliere from './VueJournaliere';
 import VueHebdomadaire from './VueHebdomadaire';
 import FiltresCalendrier from './FiltresCalendrier';
-import { useLayout } from '../../../../../contexts/LayoutContext';
+import StatCard from './StatsPlanningEtudiant';
 
-// Types pour les cours
-type Cours = {
-  id: string;
-  module: string;
-  professeur: string;
-  salle: string;
-  debut: Date;
-  fin: Date;
-};
-
-export default function CalendrierEtudiant() {
+const CalendrierEtudiant = () => {
   const { sidebarOpen } = useLayout();
-  // const [cours, setCours] = useState<Cours[]>([]);
   const [dateSelectionnee, setDateSelectionnee] = useState(new Date());
   const [vueActuelle, setVueActuelle] = useState<
     'journaliere' | 'hebdomadaire'
@@ -27,7 +17,30 @@ export default function CalendrierEtudiant() {
     professeur: '',
   });
 
-  // Navigation entre les dates
+  // Données exemple pour les stats
+  const coursJour = [
+    {
+      id: 1,
+      module: 'Développement Web',
+      professeur: 'Dr. Diallo',
+      salle: 'Salle 101',
+      debut: '08:30',
+      fin: '10:30',
+      description: 'Cours sur React et TypeScript',
+      type: 'CM',
+    },
+    {
+      id: 2,
+      module: 'Base de données',
+      professeur: 'Pr. Ndiaye',
+      salle: 'Salle 203',
+      debut: '11:00',
+      fin: '13:00',
+      description: 'Introduction à PostgreSQL',
+      type: 'TD',
+    },
+  ];
+
   const naviguerDate = (direction: 'precedent' | 'suivant') => {
     const nouvelleDate = new Date(dateSelectionnee);
     if (vueActuelle === 'journaliere') {
@@ -40,17 +53,6 @@ export default function CalendrierEtudiant() {
       );
     }
     setDateSelectionnee(nouvelleDate);
-  };
-
-  // Formatage de l'en-tête de date
-  const formaterEnTete = () => {
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    return dateSelectionnee.toLocaleDateString('fr-FR', options);
   };
 
   return (
@@ -69,80 +71,71 @@ export default function CalendrierEtudiant() {
     >
       <div className="h-full">
         <div className="p-8">
-          {/* En-tête du calendrier */}
-          <div className="p-4 border-b">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-800">
-                Emploi du temps
-              </h2>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => setVueActuelle('journaliere')}
-                  className={`px-3 py-1 rounded ${
-                    vueActuelle === 'journaliere'
-                      ? 'bg-blue-100 text-blue-600'
-                      : 'hover:bg-gray-100'
-                  }`}
-                >
-                  Jour
-                </button>
-                <button
-                  onClick={() => setVueActuelle('hebdomadaire')}
-                  className={`px-3 py-1 rounded ${
-                    vueActuelle === 'hebdomadaire'
-                      ? 'bg-blue-100 text-blue-600'
-                      : 'hover:bg-gray-100'
-                  }`}
-                >
-                  Semaine
-                </button>
-              </div>
+          <div className="mb-8 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-6 text-white">
+            <h1 className="text-3xl font-bold">Emploi du temps</h1>
+            <p className="mt-2 text-blue-100">
+              Gestion de votre planning académique
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <StatCard
+              title="Cours aujourd'hui"
+              value={coursJour.length}
+              icon={<Calendar className="h-5 w-5" />}
+              color="blue"
+            />
+            <StatCard
+              title="Prochaine séance"
+              value={coursJour[0]?.debut || '--:--'}
+              icon={<Clock className="h-5 w-5" />}
+              color="green"
+            />
+            <StatCard
+              title="Salle actuelle"
+              value={coursJour[0]?.salle || 'Aucune'}
+              icon={<Layout className="h-5 w-5" />}
+              color="purple"
+            />
+          </div>
+
+          <div className="mb-6">
+            <div className="flex space-x-2 mb-4">
+              <button
+                onClick={() => setVueActuelle('journaliere')}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  vueActuelle === 'journaliere'
+                    ? 'bg-blue-100 text-blue-600'
+                    : 'hover:bg-gray-100'
+                }`}
+              >
+                Vue journalière
+              </button>
+              <button
+                onClick={() => setVueActuelle('hebdomadaire')}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  vueActuelle === 'hebdomadaire'
+                    ? 'bg-blue-100 text-blue-600'
+                    : 'hover:bg-gray-100'
+                }`}
+              >
+                Vue hebdomadaire
+              </button>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <Calendar className="text-gray-500" size={20} />
-                <span className="font-medium">{formaterEnTete()}</span>
-              </div>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => naviguerDate('precedent')}
-                  className="p-2 hover:bg-gray-100 rounded"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  onClick={() => naviguerDate('suivant')}
-                  className="p-2 hover:bg-gray-100 rounded"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
-            </div>
-          </div>
-          {/* Filtres */}
-          <FiltresCalendrier filtres={filtres} setFiltres={setFiltres} />
-          {/* Vue du calendrier */}
-          <div className="p-4">
+            <FiltresCalendrier filtres={filtres} setFiltres={setFiltres} />
+
             {vueActuelle === 'journaliere' ? (
               <VueJournaliere
                 date={dateSelectionnee}
                 filtres={filtres}
-                onNavigate={function (
-                  direction: 'precedent' | 'suivant',
-                ): void {
-                  throw new Error('Function not implemented.');
-                }}
+                onNavigate={naviguerDate}
               />
             ) : (
               <VueHebdomadaire
                 date={dateSelectionnee}
                 filtres={filtres}
-                onNavigate={function (
-                  direction: 'precedent' | 'suivant',
-                ): void {
-                  throw new Error('Function not implemented.');
-                }}
+                onNavigate={naviguerDate}
               />
             )}
           </div>
@@ -150,4 +143,6 @@ export default function CalendrierEtudiant() {
       </div>
     </main>
   );
-}
+};
+
+export default CalendrierEtudiant;
