@@ -1,41 +1,38 @@
 import React from 'react';
 
-export const Card = ({
-  children,
-  className,
-}: {
+interface CardProps {
   children: React.ReactNode;
   className?: string;
-}) => <div className={`border p-4 rounded-lg ${className}`}>{children}</div>;
+  onClick?: () => void; // Ajout de la propriété onClick
+}
 
-export const CardHeader = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => <div className={`text-xl font-semibold ${className}`}>{children}</div>;
+export const Card = ({ children, className, onClick }: CardProps) => (
+  <div
+    className={`border p-4 rounded-lg ${className}`}
+    onClick={onClick} // Ajout de l'événement onClick
+    style={{ cursor: onClick ? 'pointer' : 'default' }} // Style de curseur conditionnel
+  >
+    {children}
+  </div>
+);
 
-export const CardContent = ({
-  children,
-  className,
-}: {
+interface CardChildProps {
   children: React.ReactNode;
   className?: string;
-}) => <div className={className}>{children}</div>;
+}
 
-export const CardTitle = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => <h2 className={className}>{children}</h2>;
+export const CardHeader = ({ children, className }: CardChildProps) => (
+  <div className={`text-xl font-semibold ${className}`}>{children}</div>
+);
 
-export const CardDescription = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => <h2 className={className}>{children}</h2>;
+export const CardContent = ({ children, className }: CardChildProps) => (
+  <div className={className}>{children}</div>
+);
+
+export const CardTitle = ({ children, className }: CardChildProps) => (
+  <h2 className={`text-lg font-bold ${className}`}>{children}</h2>
+);
+
+export const CardDescription = ({ children, className }: CardChildProps) => (
+  <p className={`text-sm text-gray-600 ${className}`}>{children}</p>
+);

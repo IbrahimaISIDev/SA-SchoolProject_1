@@ -48,13 +48,13 @@ export default function AdminMessaging() {
 
   // Données pour les destinataires
   const classes = [
-    { id: 1, name: '2ème année Info' },
+    { id: 1, name: 'L2 RI' },
     { id: 2, name: '3ème année Info' },
   ];
 
   const students = [
-    { id: 1, name: 'Ibrahima Diallo', class: '2ème année Info' },
-    { id: 2, name: 'Fatou Diallo', class: '2ème année Info' },
+    { id: 1, name: 'Ibrahima Diallo', class: 'L2 RI' },
+    { id: 2, name: 'Fatou Diallo', class: 'L2 RI' },
   ];
 
   const professors = [
@@ -349,13 +349,13 @@ export default function AdminMessaging() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const classes = [
-    { id: 1, name: '2ème année Info', department: 'dInformatique' },
+    { id: 1, name: 'L2 RI', department: 'dInformatique' },
     { id: 2, name: '3ème année Info', department: 'Informatique' },
   ];
 
   const students = [
-    { id: 1, name: 'Ibrahima Diallo', class: '2ème année Info' },
-    { id: 2, name: 'Fatou Diallo', class: '2ème année Info' },
+    { id: 1, name: 'Ibrahima Diallo', class: 'L2 RI' },
+    { id: 2, name: 'Fatou Diallo', class: 'L2 RI' },
   ];
 
   const professors = [

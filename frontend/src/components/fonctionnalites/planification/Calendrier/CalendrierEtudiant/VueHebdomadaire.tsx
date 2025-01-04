@@ -1,40 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from '../../../../ui/card';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-// Définition des types pour les props
 type Props = {
   date: Date;
   filtres: {
     module: string;
     professeur: string;
   };
+  onNavigate: (direction: 'precedent' | 'suivant') => void;
 };
 
-export default function VueHebdomadaire({ date, filtres }: Props) {
-  const [currentWeek, setCurrentWeek] = useState(date);
-
-  // Données exemple (à remplacer par les vraies données de l'API)
-  const coursHebdo = [
-    {
-      id: 1,
-      module: 'Développement Web',
-      professeur: 'Dr. Diallo',
-      salle: 'Salle 101',
-      debut: '08:30',
-      fin: '10:30',
-      jour: 'Lundi',
-    },
-    {
-      id: 2,
-      module: 'Base de données',
-      professeur: 'Pr. Ndiaye',
-      salle: 'Salle 203',
-      debut: '11:00',
-      fin: '13:00',
-      jour: 'Mardi',
-    },
-  ];
-
+const VueHebdomadaire = ({ date, filtres, onNavigate }: Props) => {
   const joursOuvres = [
     'Lundi',
     'Mardi',
@@ -48,82 +26,143 @@ export default function VueHebdomadaire({ date, filtres }: Props) {
     (_, i) => `${(i + 8).toString().padStart(2, '0')}:00`,
   );
 
-  const naviguerSemaine = (direction: number) => {
-    const newDate = new Date(currentWeek);
-    newDate.setDate(newDate.getDate() + direction * 7);
-    setCurrentWeek(newDate);
+  // Données exemple
+  const coursHebdo = [
+    {
+      id: 1,
+      module: 'Développement Web',
+      professeur: 'Dr. Diallo',
+      salle: 'Salle 101',
+      debut: '08:30',
+      fin: '10:30',
+      jour: 'Lundi',
+      type: 'CM',
+    },
+    {
+      id: 2,
+      module: 'Base de données',
+      professeur: 'Pr. Ndiaye',
+      salle: 'Salle 203',
+      debut: '11:00',
+      fin: '13:00',
+      jour: 'Mardi',
+      type: 'TD',
+    },
+  ];
+
+  const getTypeColor = (type: string) => {
+    const colors = {
+      CM: 'bg-blue-100 text-blue-800',
+      TD: 'bg-green-100 text-green-800',
+      TP: 'bg-purple-100 text-purple-800',
+    };
+    return colors[type as keyof typeof colors] || 'bg-gray-100 text-gray-800';
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-4">
-      {/* En-tête avec navigation */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">Emploi du temps hebdomadaire</h2>
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={() => naviguerSemaine(-1)}
-            className="p-2 hover:bg-gray-100 rounded"
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <span className="font-medium">
-            Semaine du {currentWeek.toLocaleDateString()}
-          </span>
-          <button
-            onClick={() => naviguerSemaine(1)}
-            className="p-2 hover:bg-gray-100 rounded"
-          >
-            <ChevronRight size={20} />
-          </button>
+    <Card>
+      <CardHeader className="border-b">
+        <div className="flex justify-between items-center">
+          <CardTitle className="text-xl">Planning de la semaine</CardTitle>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => onNavigate('precedent')}
+              className="p-2 hover:bg-gray-100 rounded-lg"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <span className="font-medium">
+              Semaine du {date.toLocaleDateString()}
+            </span>
+            <button
+              onClick={() => onNavigate('suivant')}
+              className="p-2 hover:bg-gray-100 rounded-lg"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
         </div>
-      </div>
+      </CardHeader>
+      <CardContent className="p-6">
+        <div className="overflow-x-auto">
+          <div className="min-w-max">
+            <div className="grid grid-cols-7 gap-4 mb-4">
+              <div className="w-20" />
+              {joursOuvres.map((jour) => (
+                <div
+                  key={jour}
+                  className="px-4 py-2 text-center font-medium bg-gray-50 rounded-lg"
+                >
+                  {jour}
+                </div>
+              ))}
+            </div>
 
-      {/* Grille de l'emploi du temps */}
-      <div className="overflow-x-auto">
-        <div className="min-w-max">
-          {/* En-tête des jours */}
-          <div className="grid grid-cols-7 border-b">
-            <div className="w-20"></div>
-            {joursOuvres.map((jour) => (
-              <div key={jour} className="px-4 py-2 text-center font-medium">
-                {jour}
-              </div>
+            {heures.map((heure, indexHeure) => (
+              <motion.div
+                key={heure}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: indexHeure * 0.05 }}
+                className="grid grid-cols-7 gap-4 mb-4"
+              >
+                <div className="w-20 text-sm text-gray-600 flex items-center">
+                  {heure}
+                </div>
+                {joursOuvres.map((jour) => {
+                  const cours = coursHebdo.find(
+                    (c) =>
+                      c.jour === jour &&
+                      c.debut <= heure &&
+                      c.fin > heure &&
+                      (!filtres.module || c.module === filtres.module) &&
+                      (!filtres.professeur ||
+                        c.professeur === filtres.professeur),
+                  );
+
+                  return (
+                    <div
+                      key={`${jour}-${heure}`}
+                      className="min-h-[4rem] rounded-lg border"
+                    >
+                      {cours && (
+                        <div
+                          className={`h-full p-2 rounded-lg ${
+                            cours.type === 'CM'
+                              ? 'bg-blue-50'
+                              : cours.type === 'TD'
+                                ? 'bg-green-50'
+                                : 'bg-purple-50'
+                          }`}
+                        >
+                          <div className="font-medium text-sm">
+                            {cours.module}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            {cours.professeur}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {cours.salle}
+                          </div>
+                          <span
+                            className={`text-xs px-2 py-0.5 rounded-full ${getTypeColor(
+                              cours.type,
+                            )}`}
+                          >
+                            {cours.type}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </motion.div>
             ))}
           </div>
-
-          {/* Grille horaire */}
-          {heures.map((heure) => (
-            <div key={heure} className="grid grid-cols-7 border-b">
-              <div className="w-20 px-2 py-3 text-sm text-gray-600 border-r">
-                {heure}
-              </div>
-              {joursOuvres.map((jour) => {
-                const cours = coursHebdo.find(
-                  (c) => c.jour === jour && c.debut <= heure && c.fin > heure,
-                );
-                return (
-                  <div
-                    key={`${jour}-${heure}`}
-                    className="px-2 py-1 border-r min-h-[4rem]"
-                  >
-                    {cours && (
-                      <div className="bg-blue-100 p-2 rounded text-sm h-full">
-                        <div className="font-medium">{cours.module}</div>
-                        <div className="text-xs text-gray-600">
-                          {cours.professeur} - {cours.salle}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {cours.debut} - {cours.fin}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ))}
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
-}
+};
+
+export default VueHebdomadaire;

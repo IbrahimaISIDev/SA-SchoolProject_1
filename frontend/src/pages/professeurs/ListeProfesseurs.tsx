@@ -22,10 +22,10 @@ export default function ListeProfesseurs() {
       id: 2,
       matricule: 'PR002',
       nom: 'Ba',
-      prenom: 'Marie',
+      prenom: 'Moussa',
       specialite: 'Réseaux',
       grade: 'Professeur',
-      email: 'marie.ba@isi.edu',
+      email: 'moussa.ba@isi.edu',
       telephone: '76 912 34 56',
     },
     {

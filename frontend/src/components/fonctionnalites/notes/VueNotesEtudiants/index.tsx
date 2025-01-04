@@ -9,9 +9,10 @@ import {
   PieChart,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import MenuLateralEtudiant from '../../../common/Disposition/MenuEtudiant';
+import { useLayout } from '../../../../contexts/LayoutContext';
 
 const StudentGradesView = () => {
+  const { sidebarOpen } = useLayout();
   const [selectedSemester, setSelectedSemester] = useState('S1');
   const [grades] = useState({
     S1: [
@@ -76,165 +77,184 @@ const StudentGradesView = () => {
   );
 
   return (
-    <div className="p-6 bg-gray-50">
-      <MenuLateralEtudiant />
-      <div className="mb-8 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-6 text-white">
-        <h1 className="text-3xl font-bold">Mes Notes</h1>
-        <p className="mt-2 text-blue-100">
-          Suivi de vos performances académiques
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <StatCard
-          title="Moyenne Générale"
-          value={getAverageGrade(grades[selectedSemester])}
-          suffix="/20"
-          color="blue"
-          icon={<PieChart className="h-5 w-5" />}
-        />
-        <StatCard
-          title="Crédits Validés"
-          value={validatedCredits}
-          suffix={`/${totalCredits}`}
-          color="green"
-          icon={<BarChart2 className="h-5 w-5" />}
-        />
-        <StatCard
-          title="Progression"
-          value={((validatedCredits / totalCredits) * 100).toFixed(0)}
-          suffix="%"
-          color="purple"
-          icon={<FileText className="h-5 w-5" />}
-        />
-      </div>
-
-      <Card className="mb-6">
-        <CardHeader className="border-b">
-          <div className="flex justify-between items-center">
-            <CardTitle className="text-xl">Notes du Semestre</CardTitle>
-            <select
-              className="px-4 py-2 mb-2 border rounded-lg"
-              value={selectedSemester}
-              onChange={(e) => setSelectedSemester(e.target.value)}
-            >
-              <option value="S1">Semestre 1</option>
-              <option value="S2">Semestre 2</option>
-            </select>
+    <main
+      className={`
+        fixed 
+        top-[73px] 
+        right-0 
+        bottom-0 
+        overflow-y-auto
+        bg-gray-50
+        transition-all
+        duration-300
+        ${sidebarOpen ? 'left-64' : 'left-20'}
+      `}
+    >
+      <div className="h-full">
+        <div className="p-8">
+          <div className="mb-8 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-6 text-white">
+            <h1 className="text-3xl font-bold">Mes Notes</h1>
+            <p className="mt-2 text-blue-100">
+              Suivi de vos performances académiques
+            </p>
           </div>
-        </CardHeader>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Module
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Note
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Coefficient
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Crédits
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Statut
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {grades[selectedSemester].map((grade, index) => (
-                <motion.tr
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="hover:bg-gray-50"
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <StatCard
+              title="Moyenne Générale"
+              value={getAverageGrade(grades[selectedSemester])}
+              suffix="/20"
+              color="blue"
+              icon={<PieChart className="h-5 w-5" />}
+            />
+            <StatCard
+              title="Crédits Validés"
+              value={validatedCredits}
+              suffix={`/${totalCredits}`}
+              color="green"
+              icon={<BarChart2 className="h-5 w-5" />}
+            />
+            <StatCard
+              title="Progression"
+              value={((validatedCredits / totalCredits) * 100).toFixed(0)}
+              suffix="%"
+              color="purple"
+              icon={<FileText className="h-5 w-5" />}
+            />
+          </div>
+
+          <Card className="mb-6">
+            <CardHeader className="border-b">
+              <div className="flex justify-between items-center">
+                <CardTitle className="text-xl">Notes du Semestre</CardTitle>
+                <select
+                  className="px-4 py-2 mb-2 border rounded-lg"
+                  value={selectedSemester}
+                  onChange={(e) => setSelectedSemester(e.target.value)}
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <ChevronRight className="w-4 h-4 text-gray-400 mr-2" />
-                      <span className="text-sm font-medium text-gray-900">
-                        {grade.module}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-3 py-1 rounded-lg text-sm font-semibold ${
-                        grade.note >= 15
-                          ? 'bg-green-100 text-green-800'
-                          : grade.note >= 10
-                            ? 'bg-blue-100 text-blue-800'
-                            : 'bg-red-100 text-red-800'
-                      }`}
+                  <option value="S1">Semestre 1</option>
+                  <option value="S2">Semestre 2</option>
+                </select>
+              </div>
+            </CardHeader>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Module
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Note
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Coefficient
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Crédits
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Statut
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {grades[selectedSemester].map((grade, index) => (
+                    <motion.tr
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="hover:bg-gray-50"
                     >
-                      {grade.note}/20
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="bg-gray-100 px-2 py-1 rounded">
-                      ×{grade.coefficient}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {grade.credits} ECTS
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-                        grade.status === 'validé'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}
-                    >
-                      {grade.status}
-                    </span>
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <ChevronRight className="w-4 h-4 text-gray-400 mr-2" />
+                          <span className="text-sm font-medium text-gray-900">
+                            {grade.module}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`px-3 py-1 rounded-lg text-sm font-semibold ${
+                            grade.note >= 15
+                              ? 'bg-green-100 text-green-800'
+                              : grade.note >= 10
+                                ? 'bg-blue-100 text-blue-800'
+                                : 'bg-red-100 text-red-800'
+                          }`}
+                        >
+                          {grade.note}/20
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="bg-gray-100 px-2 py-1 rounded">
+                          ×{grade.coefficient}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {grade.credits} ECTS
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                            grade.status === 'validé'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-yellow-100 text-yellow-800'
+                          }`}
+                        >
+                          {grade.status}
+                        </span>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
 
-      <Card>
-        <CardHeader className="border-b">
-          <CardTitle className="text-xl">Relevés de Notes</CardTitle>
-        </CardHeader>
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {transcripts.map((transcript) => (
-              <motion.div
-                key={transcript.id}
-                whileHover={{ y: -2 }}
-                className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <FileText className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Relevé {transcript.semester}</p>
-                    <p className="text-sm text-gray-500">{transcript.year}</p>
-                  </div>
-                </div>
-                <div className="flex space-x-2">
-                  <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
-                    <Eye className="h-5 w-5" />
-                  </button>
-                  <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
-                    <Download className="h-5 w-5" />
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          <Card>
+            <CardHeader className="border-b">
+              <CardTitle className="text-xl">Relevés de Notes</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {transcripts.map((transcript) => (
+                  <motion.div
+                    key={transcript.id}
+                    whileHover={{ y: -2 }}
+                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <FileText className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium">
+                          Relevé {transcript.semester}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {transcript.year}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
+                        <Eye className="h-5 w-5" />
+                      </button>
+                      <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
+                        <Download className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </main>
   );
 };
 

@@ -10,9 +10,10 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { Card, CardContent } from '../../ui/card';
-import MenuLateralProfesseur from '../../common/Disposition/MenuProfesseur';
+import { useLayout } from '../../../contexts/LayoutContext';
 
 export default function ProfessorMessaging() {
+  const { sidebarOpen } = useLayout();
   const [activeTab, setActiveTab] = useState('inbox');
   const [selectedRecipients, setSelectedRecipients] = useState([]);
   const [messageType, setMessageType] = useState('individual');
@@ -41,14 +42,14 @@ export default function ProfessorMessaging() {
   ];
 
   const classes = [
-    { id: 1, name: '2ème année Info' },
-    { id: 2, name: '3ème année Info' },
+    { id: 1, name: 'L2 RI' },
+    { id: 2, name: 'L3 GL' },
   ];
 
   const students = [
-    { id: 1, name: 'Ibrahima Diallo', classe: '2ème année Info' },
-    { id: 2, name: 'Fatou Diallo', classe: '2ème année Info' },
-    { id: 3, name: 'Lamine Goudiaby', classe: '3ème année Info' },
+    { id: 1, name: 'Ibrahima Diallo', classe: 'L2 RI' },
+    { id: 2, name: 'Fatou Diallo', classe: 'L2 RI' },
+    { id: 3, name: 'Lamine Goudiaby', classe: 'L3 GL' },
   ];
 
   const NewMessage = () => (
@@ -212,50 +213,65 @@ export default function ProfessorMessaging() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <MenuLateralProfesseur />
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-8 rounded-lg shadow-lg mb-8">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Messagerie</h1>
-            <p className="text-blue-100">
-              Gérez vos communications avec les étudiants
-            </p>
+    <main
+      className={`
+      fixed 
+      top-[73px] 
+      right-0 
+      bottom-0 
+      overflow-y-auto
+      bg-gray-50
+      transition-all
+      duration-300
+      ${sidebarOpen ? 'left-64' : 'left-20'}
+    `}
+    >
+      <div className="h-full">
+        <div className="p-8">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-8 rounded-lg shadow-lg mb-8">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-3xl font-bold mb-2">Messagerie</h1>
+                <p className="text-blue-100">
+                  Gérez vos communications avec les étudiants
+                </p>
+              </div>
+              <button
+                onClick={() => setActiveTab('new')}
+                className="bg-white text-blue-800 px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-blue-50 transition"
+              >
+                <Send className="h-5 w-5" />
+                Nouveau message
+              </button>
+            </div>
           </div>
-          <button
-            onClick={() => setActiveTab('new')}
-            className="bg-white text-blue-800 px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-blue-50 transition"
-          >
-            <Send className="h-5 w-5" />
-            Nouveau message
-          </button>
+
+          <div className="flex space-x-4 border-b mb-6">
+            <button
+              className={`px-6 py-3 font-medium ${
+                activeTab === 'inbox'
+                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+              onClick={() => setActiveTab('inbox')}
+            >
+              Boîte de réception
+            </button>
+            <button
+              className={`px-6 py-3 font-medium ${
+                activeTab === 'new'
+                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+              onClick={() => setActiveTab('new')}
+            >
+              Nouveau message
+            </button>
+          </div>
+
+          {activeTab === 'inbox' ? <Inbox /> : <NewMessage />}
         </div>
       </div>
-
-      <div className="flex space-x-4 border-b mb-6">
-        <button
-          className={`px-6 py-3 font-medium ${
-            activeTab === 'inbox'
-              ? 'text-blue-600 border-b-2 border-blue-600'
-              : 'text-gray-500 hover:text-gray-700'
-          }`}
-          onClick={() => setActiveTab('inbox')}
-        >
-          Boîte de réception
-        </button>
-        <button
-          className={`px-6 py-3 font-medium ${
-            activeTab === 'new'
-              ? 'text-blue-600 border-b-2 border-blue-600'
-              : 'text-gray-500 hover:text-gray-700'
-          }`}
-          onClick={() => setActiveTab('new')}
-        >
-          Nouveau message
-        </button>
-      </div>
-
-      {activeTab === 'inbox' ? <Inbox /> : <NewMessage />}
-    </div>
+    </main>
   );
 }

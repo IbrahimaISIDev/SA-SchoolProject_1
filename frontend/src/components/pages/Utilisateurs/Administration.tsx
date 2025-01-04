@@ -19,7 +19,7 @@ export default function AjouterUtilisateur() {
     {
       id: 2,
       nom: 'Ndiaye',
-      prenom: 'Marie',
+      prenom: 'Mamadou',
       role: 'Professeur',
       email: 'm.ndiaye@isi-suptech.sn',
       specialite: 'Base de données',

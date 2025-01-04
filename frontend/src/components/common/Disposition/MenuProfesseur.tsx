@@ -27,7 +27,7 @@ const MenuLateralProfesseur = () => {
     {
       icon: <Home className="w-6 h-6" />,
       label: 'Accueil',
-      path: '/professeur',
+      path: '/professeur-login',
     },
     {
       icon: <Calendar className="w-6 h-6" />,
@@ -63,6 +63,11 @@ const MenuLateralProfesseur = () => {
       icon: <Mail className="w-6 h-6" />,
       label: 'Messages',
       path: '/professeur/messages',
+    },
+    {
+      icon: <ClipboardCheck className="w-6 h-6" />,
+      label: 'Corrections',
+      path: '/professeur/corrections',
     },
   ];
 
@@ -140,6 +145,27 @@ const MenuLateralProfesseur = () => {
             </div>
           ))}
         </nav>
+
+        {/* Bouton de déconnexion */}
+        <div className="absolute bottom-4 w-full px-4">
+          <div
+            className={`
+                      flex items-center px-4 py-3 mx-4
+                      rounded-lg cursor-pointer
+                      text-red-600 hover:bg-red-50
+                      transition-all duration-200
+                      ${!sidebarOpen && 'justify-center'}
+                    `}
+            onClick={handleLogout}
+          >
+            <LogOut className="w-6 h-6 flex-shrink-0" />
+            {sidebarOpen && (
+              <span className="ml-3 font-medium whitespace-nowrap">
+                Déconnexion
+              </span>
+            )}
+          </div>
+        </div>
       </div>
 
       <header className="bg-white border-b border-gray-200 fixed w-full top-0 z-40">
