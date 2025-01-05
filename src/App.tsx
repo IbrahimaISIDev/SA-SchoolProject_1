@@ -107,6 +107,7 @@ function App() {
       <LayoutProvider>
         <Routes>
           {/* Routes publiques */}
+          {/* Routes publiques */}
           <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route
@@ -122,6 +123,7 @@ function App() {
             element={<DocumentsAdministratifs />}
           />
 
+          {/* Routes administrateur */}
           {/* Routes administrateur */}
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<TableauBord />} />
@@ -182,6 +184,7 @@ function App() {
           </Route>
 
           {/* Routes professeur */}
+          {/* Routes professeur */}
           <Route element={<TeacherLayout />}>
             <Route path="/professeur-login" element={<ProfilProfesseur />} />
             <Route path="/professeur/annulations" element={<LeaveRequest />} />
@@ -206,6 +209,7 @@ function App() {
             />
           </Route>
 
+          {/* Redirection par défaut */}
           {/* Redirection par défaut */}
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
