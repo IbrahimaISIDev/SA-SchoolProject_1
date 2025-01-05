@@ -157,6 +157,7 @@ function App() {
           </Route>
 
           {/* Routes étudiant */}
+          {/* Routes étudiant */}
           <Route element={<StudentLayout />}>
             <Route path="/etudiant-login" element={<StudentProfile />} />
             <Route path="/etudiant/absences" element={<StudentAbsenceView />} />
