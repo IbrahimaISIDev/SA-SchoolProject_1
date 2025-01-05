@@ -1,6 +1,6 @@
-# Application de Gestion Pédagogique - ISI Suptech
+# Application de Gestion Pédagogique
 
-Une application web moderne pour la gestion pédagogique, développée avec /React.
+Une application web moderne pour la gestion pédagogique, développée avec React.
 
 ## 🚀 Fonctionnalités
 
