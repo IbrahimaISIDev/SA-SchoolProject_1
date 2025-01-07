@@ -55,6 +55,7 @@ import AssignmentManagement from './components/fonctionnalites/utilisateurs/Prof
 import DocumentsAdministratifsProfs from './components/fonctionnalites/utilisateurs/ProfilProfesseur/MesDocuments';
 import ProfessorMessaging from './components/pages/messages/MessagesProfesseurs';
 import CalendrierProfesseur from './components/fonctionnalites/planification/Calendrier/CalendrierProfesseur';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 // Layout components
 const MainLayout = () => {
@@ -104,116 +105,127 @@ const TeacherLayout = () => {
 function App() {
   return (
     <Router>
-      <LayoutProvider>
-        <Routes>
-          {/* Routes publiques */}
-          {/* Routes publiques */}
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/documents/carte-etudiant"
-            element={<DocumentsAdministratifs />}
-          />
-          <Route
-            path="/documents/certificat-scolarite"
-            element={<DocumentsAdministratifs />}
-          />
-          <Route
-            path="/documents/releve-notes"
-            element={<DocumentsAdministratifs />}
-          />
+      <ThemeProvider>
+        <LayoutProvider>
+          <Routes>
+            {/* Routes publiques */}
+            {/* Routes publiques */}
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/documents/carte-etudiant"
+              element={<DocumentsAdministratifs />}
+            />
+            <Route
+              path="/documents/certificat-scolarite"
+              element={<DocumentsAdministratifs />}
+            />
+            <Route
+              path="/documents/releve-notes"
+              element={<DocumentsAdministratifs />}
+            />
 
-          {/* Routes administrateur */}
-          {/* Routes administrateur */}
-          <Route element={<MainLayout />}>
-            <Route path="/dashboard" element={<TableauBord />} />
-            <Route path="/absences" element={<AbsencesWidget />} />
-            <Route path="/cours" element={<CoursWidget />} />
-            <Route path="/performance" element={<PerformanceWidget />} />
-            <Route path="/planning" element={<Planification />} />
-            <Route path="/presences" element={<GestionPresences />} />
-            <Route path="/notes" element={<GestionNotes />} />
-            <Route path="/utilisateurs" element={<Administration />} />
-            <Route path="/parametres" element={<Parametres />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/prochains-cours" element={<ProchainsCoursPage />} />
-            <Route path="/stat-absences" element={<StatistiquesAbsences />} />
-            <Route path="/admins/messages" element={<AdminMessaging />} />
-            <Route
-              path="/planification/gestion-cours"
-              element={<GestionCours />}
-            />
-            <Route
-              path="/utilisateurs/gestion-users"
-              element={<AjouterUtilisateur />}
-            />
-            <Route
-              path="/ajouter-utilisateur"
-              element={<AjouterUtilisateur />}
-            />
-            <Route
-              path="/admin/utilisateurs"
-              element={<GestionUtilisateurs />}
-            />
-            <Route path="/admin/profil" element={<ProfilAdministrateur />} />
-          </Route>
+            {/* Routes administrateur */}
+            {/* Routes administrateur */}
+            <Route element={<MainLayout />}>
+              <Route path="/dashboard" element={<TableauBord />} />
+              <Route path="/absences" element={<AbsencesWidget />} />
+              <Route path="/cours" element={<CoursWidget />} />
+              <Route path="/performance" element={<PerformanceWidget />} />
+              <Route path="/planning" element={<Planification />} />
+              <Route path="/presences" element={<GestionPresences />} />
+              <Route path="/notes" element={<GestionNotes />} />
+              <Route path="/utilisateurs" element={<Administration />} />
+              <Route path="/parametres" element={<Parametres />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/prochains-cours" element={<ProchainsCoursPage />} />
+              <Route path="/stat-absences" element={<StatistiquesAbsences />} />
+              <Route path="/admins/messages" element={<AdminMessaging />} />
+              <Route
+                path="/planification/gestion-cours"
+                element={<GestionCours />}
+              />
+              <Route
+                path="/utilisateurs/gestion-users"
+                element={<AjouterUtilisateur />}
+              />
+              <Route
+                path="/ajouter-utilisateur"
+                element={<AjouterUtilisateur />}
+              />
+              <Route
+                path="/admin/utilisateurs"
+                element={<GestionUtilisateurs />}
+              />
+              <Route path="/admin/profil" element={<ProfilAdministrateur />} />
+            </Route>
 
-          {/* Routes étudiant */}
-          {/* Routes étudiant */}
-          <Route element={<StudentLayout />}>
-            <Route path="/etudiant-login" element={<StudentProfile />} />
-            <Route path="/etudiant/absences" element={<StudentAbsenceView />} />
-            <Route path="/etudiant/notes" element={<StudentGradesView />} />
-            <Route path="/etudiant/messages" element={<MessageView />} />
-            <Route
-              path="/etudiant/traveaux"
-              element={<AssignmentSubmission />}
-            />
-            <Route
-              path="/etudiant/documents"
-              element={<DocumentsAdministratifsEtudiants />}
-            />
-            <Route
-              path="/etudiant/justifications"
-              element={<FormulaireJustification />}
-            />
-            <Route
-              path="/etudiant/emploi-du-temps"
-              element={<CalendrierEtudiant />}
-            />
-          </Route>
+            {/* Routes étudiant */}
+            {/* Routes étudiant */}
+            <Route element={<StudentLayout />}>
+              <Route path="/etudiant-login" element={<StudentProfile />} />
+              <Route
+                path="/etudiant/absences"
+                element={<StudentAbsenceView />}
+              />
+              <Route path="/etudiant/notes" element={<StudentGradesView />} />
+              <Route path="/etudiant/messages" element={<MessageView />} />
+              <Route
+                path="/etudiant/traveaux"
+                element={<AssignmentSubmission />}
+              />
+              <Route
+                path="/etudiant/documents"
+                element={<DocumentsAdministratifsEtudiants />}
+              />
+              <Route
+                path="/etudiant/justifications"
+                element={<FormulaireJustification />}
+              />
+              <Route
+                path="/etudiant/emploi-du-temps"
+                element={<CalendrierEtudiant />}
+              />
+            </Route>
 
-          {/* Routes professeur */}
-          {/* Routes professeur */}
-          <Route element={<TeacherLayout />}>
-            <Route path="/professeur-login" element={<ProfilProfesseur />} />
-            <Route path="/professeur/annulations" element={<LeaveRequest />} />
-            <Route path="/professeur/notes" element={<GradeManagement />} />
-            <Route path="/professeur/classes" element={<ProfessorClasses />} />
-            <Route path="/professeur/cours" element={<ProfessorCourses />} />
-            <Route
-              path="/professeur/corrections"
-              element={<AssignmentManagement />}
-            />
-            <Route
-              path="/professeur/documents"
-              element={<DocumentsAdministratifsProfs />}
-            />
-            <Route
-              path="/professeur/messages"
-              element={<ProfessorMessaging />}
-            />
-            <Route
-              path="/professeur/emploi-du-temps"
-              element={<CalendrierProfesseur />}
-            />
-          </Route>
+            {/* Routes professeur */}
+            {/* Routes professeur */}
+            <Route element={<TeacherLayout />}>
+              <Route path="/professeur-login" element={<ProfilProfesseur />} />
+              <Route
+                path="/professeur/annulations"
+                element={<LeaveRequest />}
+              />
+              <Route path="/professeur/notes" element={<GradeManagement />} />
+              <Route
+                path="/professeur/classes"
+                element={<ProfessorClasses />}
+              />
+              <Route path="/professeur/cours" element={<ProfessorCourses />} />
+              <Route
+                path="/professeur/corrections"
+                element={<AssignmentManagement />}
+              />
+              <Route
+                path="/professeur/documents"
+                element={<DocumentsAdministratifsProfs />}
+              />
+              <Route
+                path="/professeur/messages"
+                element={<ProfessorMessaging />}
+              />
+              <Route
+                path="/professeur/emploi-du-temps"
+                element={<CalendrierProfesseur />}
+              />
+            </Route>
 
-          {/* Redirection par défaut */}
-          {/* Redirection par défaut */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </LayoutProvider>
+            {/* Redirection par défaut */}
+            {/* Redirection par défaut */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </LayoutProvider>
+      </ThemeProvider>
     </Router>
   );
 }
