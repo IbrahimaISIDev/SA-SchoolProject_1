@@ -56,10 +56,10 @@ export const TableCell = ({
 }: {
   children: React.ReactNode;
   className?: string;
-  colSpan?: number;
+  colSpan?: number; // Ensure colSpan is of type number
 }) => (
   <td
-    colSpan={colSpan} // Ajout de colSpan ici
+    colSpan={colSpan} // This is now guaranteed to be a number
     className={`px-6 py-4 whitespace-nowrap text-sm text-gray-900 ${className}`}
   >
     {children}

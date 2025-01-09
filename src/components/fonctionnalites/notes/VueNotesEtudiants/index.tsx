@@ -10,7 +10,20 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLayout } from '../../../../contexts/LayoutContext';
+import html2pdf from 'html2pdf.js';
 
+const handleDownloadPDF = () => {
+  const element = document.getElementById('grade-report'); // ID du conteneur principal
+  html2pdf().from(element).save('Bulletin_Notes.pdf');
+};
+
+const handlePreview = () => {
+  alert('Aperçu de la page en cours...');
+};
+
+const handleDownload = () => {
+  window.print(); // Pour imprimer ou sauvegarder en PDF directement.
+};
 const StudentGradesView = () => {
   const { sidebarOpen } = useLayout();
   const [selectedSemester, setSelectedSemester] = useState('S1');
@@ -240,11 +253,27 @@ const StudentGradesView = () => {
                       </div>
                     </div>
                     <div className="flex space-x-2">
-                      <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
+                      {/* <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
                         <Eye className="h-5 w-5" />
+                      </button> */}
+                      <button
+                        onClick={handlePreview}
+                        // className="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+                      >
+                        <Eye size={18} />
+                        {/* <span>Aperçu</span> */}
                       </button>
-                      <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
+                      {/* <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
                         <Download className="h-5 w-5" />
+                      </button> */}
+                      <button
+                        onClick={handleDownload}
+                        // className="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+                      >
+                        <Download size={18} />
+                        {/* <span>Télécharger</span> */}
                       </button>
                     </div>
                   </motion.div>

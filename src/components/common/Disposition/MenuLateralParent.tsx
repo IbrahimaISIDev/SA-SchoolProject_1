@@ -4,16 +4,16 @@ import {
   Menu,
   Home,
   Calendar,
-  BookOpen,
-  Users,
-  ClipboardCheck,
-  FileText,
-  Bell,
-  User,
+  UserX,
+  GraduationCap,
   Settings,
   LogOut,
+  Bell,
+  User,
+  FileText,
   Mail,
-  XCircle,
+  CreditCard,
+  Users,
   Sun,
   Moon,
 } from 'lucide-react';
@@ -21,7 +21,7 @@ import { useLayout } from '../../../contexts/LayoutContext';
 import { useTheme } from '../../../contexts/ThemeContext';
 import DropdownMenu from '../../ui/DropdownMenu';
 
-const MenuLateralProfesseur = () => {
+const MenuLateralParent = () => {
   const { sidebarOpen, setSidebarOpen } = useLayout();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
@@ -31,47 +31,42 @@ const MenuLateralProfesseur = () => {
     {
       icon: <Home className="w-6 h-6" />,
       label: 'Accueil',
-      path: '/professeur-login',
-    },
-    {
-      icon: <Calendar className="w-6 h-6" />,
-      label: 'Emploi du temps',
-      path: '/professeur/emploi-du-temps',
-    },
-    {
-      icon: <BookOpen className="w-6 h-6" />,
-      label: 'Mes cours',
-      path: '/professeur/cours',
+      path: '/parent-login',
     },
     {
       icon: <Users className="w-6 h-6" />,
-      label: 'Mes classes',
-      path: '/professeur/classes',
+      label: 'Mes enfants',
+      path: '/parent/enfants',
     },
     {
-      icon: <ClipboardCheck className="w-6 h-6" />,
-      label: 'Gestion des notes',
-      path: '/professeur/notes',
+      icon: <Calendar className="w-6 h-6" />,
+      label: 'Emplois du temps',
+      path: '/parent/emplois-du-temps',
     },
     {
-      icon: <XCircle className="w-6 h-6" />,
-      label: 'Demandes',
-      path: '/professeur/annulations',
+      icon: <UserX className="w-6 h-6" />,
+      label: 'Absences',
+      path: '/parent/absences',
+    },
+    {
+      icon: <GraduationCap className="w-6 h-6" />,
+      label: 'Notes & Bulletins',
+      path: '/parent/notes',
     },
     {
       icon: <FileText className="w-6 h-6" />,
       label: 'Documents',
-      path: '/professeur/documents',
+      path: '/parent/documents',
+    },
+    {
+      icon: <CreditCard className="w-6 h-6" />,
+      label: 'Paiements',
+      path: '/parent/paiements',
     },
     {
       icon: <Mail className="w-6 h-6" />,
       label: 'Messages',
-      path: '/professeur/messages',
-    },
-    {
-      icon: <ClipboardCheck className="w-6 h-6" />,
-      label: 'Corrections',
-      path: '/professeur/corrections',
+      path: '/parent/messages',
     },
   ];
 
@@ -85,12 +80,12 @@ const MenuLateralProfesseur = () => {
     {
       icon: <User className="w-4 h-4" />,
       label: 'Mon profil',
-      onClick: () => navigate('/professeur/profil'),
+      onClick: () => navigate('/parent/profil'),
     },
     {
       icon: <Settings className="w-4 h-4" />,
       label: 'Paramètres',
-      onClick: () => navigate('/professeur/parametres'),
+      onClick: () => navigate('/parent/parametres'),
     },
     {
       icon: <LogOut className="w-4 h-4" />,
@@ -127,7 +122,7 @@ const MenuLateralProfesseur = () => {
               <span className="text-white text-lg font-bold">SA</span>
             </div>
             <h1 className="text-lg font-bold text-gray-900 dark:text-white">
-              Espace Professeur
+              Espace Parent
             </h1>
           </div>
           <button
@@ -144,16 +139,16 @@ const MenuLateralProfesseur = () => {
               key={item.path}
               onClick={() => handleNavigation(item.path)}
               className={`
-                          flex items-center px-4 py-3 my-1
-                          rounded-lg cursor-pointer
-                          transition-all duration-200
-                          ${
-                            activeItem === item.path
-                              ? 'bg-blue-600 dark:bg-blue-500 text-white'
-                              : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300'
-                          }
-                          ${!sidebarOpen && 'justify-center'}
-                        `}
+                flex items-center px-4 py-3 my-1
+                rounded-lg cursor-pointer
+                transition-all duration-200
+                ${
+                  activeItem === item.path
+                    ? 'bg-blue-600 dark:bg-blue-500 text-white'
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300'
+                }
+                ${!sidebarOpen && 'justify-center'}
+              `}
             >
               {React.cloneElement(item.icon, {
                 className: `${
@@ -174,13 +169,13 @@ const MenuLateralProfesseur = () => {
         <div className="absolute bottom-4 w-full px-4">
           <div
             className={`
-                        flex items-center px-4 py-3 mx-4
-                        rounded-lg cursor-pointer
-                        text-red-600 dark:text-red-400
-                        hover:bg-red-50 dark:hover:bg-red-900/20
-                        transition-all duration-200
-                        ${!sidebarOpen && 'justify-center'}
-                      `}
+              flex items-center px-4 py-3 mx-4
+              rounded-lg cursor-pointer
+              text-red-600 dark:text-red-400
+              hover:bg-red-50 dark:hover:bg-red-900/20
+              transition-all duration-200
+              ${!sidebarOpen && 'justify-center'}
+            `}
             onClick={handleLogout}
           >
             <LogOut className="w-6 h-6 flex-shrink-0" />
@@ -196,10 +191,10 @@ const MenuLateralProfesseur = () => {
       <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 fixed w-full top-0 z-40">
         <div
           className={`
-                      px-6 py-4 flex justify-end items-center
-                      ${sidebarOpen ? 'ml-64' : 'ml-20'}
-                      transition-all duration-300
-                    `}
+            px-6 py-4 flex justify-end items-center
+            ${sidebarOpen ? 'ml-64' : 'ml-20'}
+            transition-all duration-300
+          `}
         >
           <div className="flex items-center space-x-6">
             {/* Theme Toggle Button */}
@@ -219,7 +214,7 @@ const MenuLateralProfesseur = () => {
               <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
                 <Bell className="w-6 h-6 text-gray-600 dark:text-gray-300" />
                 <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center border-2 border-white dark:border-gray-800">
-                  5
+                  3
                 </span>
               </button>
             </div>
@@ -227,10 +222,10 @@ const MenuLateralProfesseur = () => {
             <div className="flex items-center space-x-4">
               <div className="text-right">
                 <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Birane Baila Wane
+                  Mamadou Diallo
                 </p>
                 <p className="text-md text-gray-500 dark:text-gray-400">
-                  Professeur
+                  Parent
                 </p>
               </div>
               <DropdownMenu
@@ -252,4 +247,4 @@ const MenuLateralProfesseur = () => {
   );
 };
 
-export default MenuLateralProfesseur;
+export default MenuLateralParent;

@@ -10,7 +10,7 @@ const PiedDePage = () => {
         {/* Aligné avec le contenu principal */}
         <div className="flex justify-between items-center">
           <p className="text-sm text-gray-600">
-            © {new Date().getFullYear()} SOnatel Academy. Tous droits réservés.
+            © {new Date().getFullYear()} Sonatel Academy. Tous droits réservés.
           </p>
           <div className="flex space-x-4">
             <a href="#" className="text-sm text-gray-600 hover:text-gray-900">

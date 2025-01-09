@@ -22,7 +22,7 @@ import CoursWidget from './components/pages/TableauBord/Widgets/CoursWidget';
 import PerformanceWidget from './components/pages/TableauBord/Widgets/PerformanceWidget';
 import Planification from './components/pages/Planification';
 import GestionPresences from './components/pages/Presences';
-import GestionNotes from './components/pages/Notes';
+import GestionNotes from './components/fonctionnalites/absences/FeuillePresence/Notes';
 import Administration from './components/pages/Utilisateurs/Administration';
 import Parametres from './components/pages/settings/Parametres';
 import ProfilePage from './components/pages/Profile';
@@ -56,6 +56,16 @@ import DocumentsAdministratifsProfs from './components/fonctionnalites/utilisate
 import ProfessorMessaging from './components/pages/messages/MessagesProfesseurs';
 import CalendrierProfesseur from './components/fonctionnalites/planification/Calendrier/CalendrierProfesseur';
 import { ThemeProvider } from './contexts/ThemeContext';
+import GradeReport from './components/fonctionnalites/notes/Bulletin/indexPremium1';
+import MenuLateralParent from './components/common/Disposition/MenuLateralParent';
+import CalendrierParent from './components/fonctionnalites/planification/Calendrier/CalendrierParent';
+import ParentAbsencesView from './components/fonctionnalites/absences/FeuillePresence/absencesEtudiantsViewParents';
+import ParentChildrenView from './components/fonctionnalites/utilisateurs/ProfilParent/ChildrenView';
+import ParentPaymentsView from './components/fonctionnalites/utilisateurs/ProfilParent/payment';
+import ParentDocumentsView from './components/fonctionnalites/utilisateurs/ProfilParent/DocumentsView';
+import ParentMessagesView from './components/pages/messages/MessagesParents';
+import ParentDashboard from './components/fonctionnalites/utilisateurs/ProfilParent/home';
+import ParentGradesView from './components/fonctionnalites/utilisateurs/ProfilParent/Notes&Bulletins';
 
 // Layout components
 const MainLayout = () => {
@@ -88,6 +98,19 @@ const StudentLayout = () => {
   );
 };
 
+const ParentLayout = () => {
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <MenuLateralParent />
+      <div className="flex-1 pt-16">
+        <div className="mx-auto max-w-7xl px-4">
+          <Outlet />
+        </div>
+      </div>
+      <PiedDePage />
+    </div>
+  );
+};
 const TeacherLayout = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -109,7 +132,6 @@ function App() {
         <LayoutProvider>
           <Routes>
             {/* Routes publiques */}
-            {/* Routes publiques */}
             <Route path="/" element={<LoginPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route
@@ -126,7 +148,6 @@ function App() {
             />
 
             {/* Routes administrateur */}
-            {/* Routes administrateur */}
             <Route element={<MainLayout />}>
               <Route path="/dashboard" element={<TableauBord />} />
               <Route path="/absences" element={<AbsencesWidget />} />
@@ -134,7 +155,8 @@ function App() {
               <Route path="/performance" element={<PerformanceWidget />} />
               <Route path="/planning" element={<Planification />} />
               <Route path="/presences" element={<GestionPresences />} />
-              <Route path="/notes" element={<GestionNotes />} />
+              {/* <Route path="/notes" element={<GestionNotes />} /> */}
+              <Route path="/notes" element={<GradeReport />} />
               <Route path="/utilisateurs" element={<Administration />} />
               <Route path="/parametres" element={<Parametres />} />
               <Route path="/profile" element={<ProfilePage />} />
@@ -160,7 +182,6 @@ function App() {
               <Route path="/admin/profil" element={<ProfilAdministrateur />} />
             </Route>
 
-            {/* Routes étudiant */}
             {/* Routes étudiant */}
             <Route element={<StudentLayout />}>
               <Route path="/etudiant-login" element={<StudentProfile />} />
@@ -188,7 +209,6 @@ function App() {
               />
             </Route>
 
-            {/* Routes professeur */}
             {/* Routes professeur */}
             <Route element={<TeacherLayout />}>
               <Route path="/professeur-login" element={<ProfilProfesseur />} />
@@ -219,7 +239,26 @@ function App() {
                 element={<CalendrierProfesseur />}
               />
             </Route>
-
+            {/* Routes parent */}
+            <Route element={<ParentLayout />}>
+              <Route
+                path="/parent/emplois-du-temps"
+                element={<CalendrierParent />}
+              />
+              <Route path="/parent/absences" element={<ParentAbsencesView />} />
+              <Route path="/parent/enfants" element={<ParentChildrenView />} />
+              <Route path="/parent/messages" element={<ParentMessagesView />} />
+              <Route path="/parent-login" element={<ParentDashboard />} />
+              <Route path="/parent/notes" element={<ParentGradesView />} />
+              <Route
+                path="/parent/documents"
+                element={<ParentDocumentsView />}
+              />
+              <Route
+                path="/parent/paiements"
+                element={<ParentPaymentsView />}
+              />
+            </Route>
             {/* Redirection par défaut */}
             {/* Redirection par défaut */}
             <Route path="*" element={<Navigate to="/login" replace />} />

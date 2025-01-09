@@ -44,7 +44,7 @@ export default function StudentMessaging() {
   const professors = [
     { id: 1, name: 'Coach Wane', subject: 'Laravel' },
     { id: 2, name: 'Coach Aly', subject: 'Python' },
-    { id: 3, name: 'Coach Diallo', subject: 'Anglais' },
+    { id: 3, name: 'Coach Diallo', subject: 'TypeScript' },
   ];
 
   const NewMessage = () => (

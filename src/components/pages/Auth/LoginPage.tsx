@@ -21,6 +21,7 @@ const LoginPage = () => {
   const handleLogin = () => navigate('/dashboard'); // Page principale après connexion
   const handleStudentLogin = () => navigate('/etudiant-login'); // Redirection pour étudiant
   const handleProfessorLogin = () => navigate('/professeur-login'); // Redirection pour professeur
+  const handleParentLogin = () => navigate('/parent/emplois-du-temps'); // Redirection pour professeur
 
   return (
     <div
@@ -148,6 +149,14 @@ const LoginPage = () => {
               >
                 <i className="fas fa-chalkboard-teacher mr-2"></i> Connexion
                 Professeur
+              </button>
+              <button
+                type="button"
+                onClick={handleParentLogin} // Redirection vers login parent
+                className="w-full py-3 bg-orange-600 text-white font-semibold rounded-lg shadow-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200 ease-in-out mt-4"
+              >
+                <i className="fas fa-chalkboard-teacher mr-2"></i>Connexion
+                Parent
               </button>
             </form>
           </div>
