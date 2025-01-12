@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Calendar, Eye, Download, ChevronDown, ChevronUp } from 'lucide-react';
 import { Card, CardContent } from '../../../ui/card';
 import { useLayout } from '../../../../contexts/LayoutContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function ParentAbsencesView() {
+  const navigate = useNavigate();
   const { sidebarOpen } = useLayout();
   const [periodFilter, setPeriodFilter] = useState('week');
   const [expandedChild, setExpandedChild] = useState(null);
@@ -207,7 +209,12 @@ export default function ParentAbsencesView() {
                                     </span>
                                   </td>
                                   <td className="px-6 py-4">
-                                    <button className="text-blue-600 hover:text-blue-800 font-medium">
+                                    <button
+                                      onClick={() =>
+                                        navigate('/etudiant/justifications')
+                                      }
+                                      className="text-blue-600 hover:text-blue-800 font-medium"
+                                    >
                                       Soumettre justificatif
                                     </button>
                                   </td>
@@ -311,8 +318,8 @@ export default function ParentAbsencesManagement() {
               <p className="text-sm text-gray-500 mt-1">{description}</p>
             )}
           </div>
-          <div className={`bg-${color}-100 p-3 rounded-full`}>
-            <Icon className={`h-6 w-6 text-${color}-600`} />
+          <div className={bg-${color}-100 p-3 rounded-full}>
+            <Icon className={h-6 w-6 text-${color}-600} />
           </div>
         </div>
       </CardContent>
@@ -390,25 +397,25 @@ export default function ParentAbsencesManagement() {
                     <StatCard
                       icon={Clock}
                       label="Total des absences"
-                      value={`${child.stats.totalAbsences}h`}
+                      value={${child.stats.totalAbsences}h}
                       color="blue"
                     />
                     <StatCard
                       icon={CheckCircle2}
                       label="Absences justifiées"
-                      value={`${child.stats.justified}h`}
+                      value={${child.stats.justified}h}
                       color="green"
                     />
                     <StatCard
                       icon={XCircle}
                       label="Non justifiées"
-                      value={`${child.stats.unjustified}h`}
+                      value={${child.stats.unjustified}h}
                       color="red"
                     />
                     <StatCard
                       icon={CalendarIcon}
                       label="Taux de présence"
-                      value={`${child.stats.attendanceRate}%`}
+                      value={${child.stats.attendanceRate}%}
                       color="purple"
                     />
                   </div>

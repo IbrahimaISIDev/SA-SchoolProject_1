@@ -26,7 +26,7 @@ const MenuLateralEtudiant = () => {
   const { sidebarOpen, setSidebarOpen } = useLayout();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
-  const [activeItem, setActiveItem] = React.useState('/');
+  const [activeItem, setActiveItem] = React.useState('/etudiant-login');
 
   const menuItems = [
     {

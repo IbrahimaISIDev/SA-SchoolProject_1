@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   GraduationCap,
   Calendar,
   UserX,
   FileText,
-  ArrowRight,
   Mail,
   Star,
   Clock,
@@ -12,16 +11,21 @@ import {
 import { Card, CardHeader, CardContent } from '../../../ui/card';
 import { useLayout } from '../../../../contexts/LayoutContext';
 import { useNavigate } from 'react-router-dom';
+import web1Image from '../../../../assets/images/logos/web-1.jpeg';
 
 export default function ParentChildrenView() {
   const { sidebarOpen } = useLayout();
   const navigate = useNavigate();
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1); // Page actuelle
+  const itemsPerPage = 2; // Nombre d'éléments par page
+
   const children = [
     {
       id: 1,
       name: 'Fatou Diallo',
-      photo: '/api/placeholder/150/150',
+      photo: web1Image,
       class: 'L2 GL',
       studentId: 'ETU2024002',
       age: 20,
@@ -35,7 +39,7 @@ export default function ParentChildrenView() {
     {
       id: 2,
       name: 'Amadou Diallo',
-      photo: '/api/placeholder/150/150',
+      photo: web1Image,
       class: 'L1 GL',
       studentId: 'ETU2024003',
       age: 18,
@@ -46,7 +50,50 @@ export default function ParentChildrenView() {
         ranking: '5ème/40',
       },
     },
+    {
+      id: 3,
+      name: 'Moussa Ndiaye',
+      photo: web1Image,
+      class: 'L3 GL',
+      studentId: 'ETU2024004',
+      age: 21,
+      stats: {
+        average: 16.0,
+        absences: 5,
+        lateArrivals: 0,
+        ranking: '1er/30',
+      },
+    },
+    {
+      id: 4,
+      name: 'Aissatou Sow',
+      photo: web1Image,
+      class: 'L2 GL',
+      studentId: 'ETU2024005',
+      age: 19,
+      stats: {
+        average: 13.8,
+        absences: 10,
+        lateArrivals: 2,
+        ranking: '7ème/35',
+      },
+    },
   ];
+
+  const filteredChildren = children.filter((child) =>
+    child.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  // Calculer les éléments à afficher pour la page actuelle
+  const indexOfLastChild = currentPage * itemsPerPage;
+  const indexOfFirstChild = indexOfLastChild - itemsPerPage;
+  const currentChildren = filteredChildren.slice(
+    indexOfFirstChild,
+    indexOfLastChild,
+  );
+
+  // Calculer le nombre total de pages
+  const totalPages = Math.ceil(filteredChildren.length / itemsPerPage);
 
   const QuickActionButton = ({ icon: Icon, label, onClick }) => (
     <button
@@ -61,7 +108,7 @@ export default function ParentChildrenView() {
   );
 
   const StatCard = ({ icon: Icon, label, value, color }) => (
-    <div className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
+    <div className={`flex items-center space-x-3 bg-gray-50 p-3 rounded-lg`}>
       <div className={`bg-${color}-100 p-2 rounded-lg`}>
         <Icon className={`w-5 h-5 text-${color}-600`} />
       </div>
@@ -74,8 +121,7 @@ export default function ParentChildrenView() {
 
   return (
     <main
-      className={`
-        fixed 
+      className={`fixed 
         top-[73px] 
         right-0 
         bottom-0 
@@ -83,8 +129,7 @@ export default function ParentChildrenView() {
         bg-gray-50
         transition-all
         duration-300
-        ${sidebarOpen ? 'left-64' : 'left-20'}
-      `}
+        ${sidebarOpen ? 'left-64' : 'left-20'}`}
     >
       <div className="p-8">
         <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-8 rounded-lg shadow-lg mb-8">
@@ -94,8 +139,19 @@ export default function ParentChildrenView() {
           </p>
         </div>
 
+        {/* Barre de recherche */}
+        <div className="mb-8">
+          <input
+            type="text"
+            placeholder="Rechercher un enfant..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          />
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {children.map((child) => (
+          {currentChildren.map((child) => (
             <Card key={child.id} className="border-t-4 border-t-blue-600">
               <CardHeader className="pb-0">
                 <div className="flex justify-between items-start">
@@ -115,13 +171,6 @@ export default function ParentChildrenView() {
                       <p className="text-sm text-gray-500">{child.age} ans</p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => navigate(`/parent/enfant/${child.id}`)}
-                    className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
-                  >
-                    Voir détails
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
                 </div>
               </CardHeader>
 
@@ -191,6 +240,27 @@ export default function ParentChildrenView() {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Pagination */}
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300"
+          >
+            Précédent
+          </button>
+          <span className="px-4 py-2 text-lg text-gray-700">
+            Page {currentPage} sur {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300"
+          >
+            Suivant
+          </button>
         </div>
       </div>
     </main>
