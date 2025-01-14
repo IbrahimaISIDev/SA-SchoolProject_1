@@ -58,3 +58,4 @@ export const ParentLayout = () => (
     <PiedDePage />
   </div>
 );
+export { useLayout };

@@ -1,4 +1,4 @@
-# Structure complète de la partie Front-End du projet ISI Suptech
+# Structure complète de la partie Front-End du projet Gestion Pédagogique
 src/
 ├── assets/
 │   ├── images/

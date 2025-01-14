@@ -7,9 +7,10 @@ import ProfessorClasses from '../components/fonctionnalites/utilisateurs/ProfilP
 import ProfessorCourses from '../components/fonctionnalites/utilisateurs/ProfilProfesseur/MesCours';
 import AssignmentManagement from '../components/fonctionnalites/utilisateurs/ProfilProfesseur/Corrections';
 import DocumentsAdministratifsProfs from '../components/fonctionnalites/utilisateurs/ProfilProfesseur/MesDocuments';
-import ProfessorMessaging from '../components/pages/messages/MessagesProfesseurs';
 import CalendrierProfesseur from '../components/fonctionnalites/planification/Calendrier/CalendrierProfesseur';
 import React from 'react';
+import { ProfessorResources } from '../components/fonctionnalites/utilisateurs/ProfilProfesseur/ProfessorResources';
+import ProfessorMessaging from '../components/messaging/ProfessorMessaging';
 
 export const TeacherRoutes = [
   <Route
@@ -46,6 +47,11 @@ export const TeacherRoutes = [
     key="professeur-documents"
     path="/professeur/documents"
     element={<DocumentsAdministratifsProfs />}
+  />,
+  <Route
+    key="professeur-ressources"
+    path="/professeur/ressources"
+    element={<ProfessorResources />}
   />,
   <Route
     key="professeur-messages"

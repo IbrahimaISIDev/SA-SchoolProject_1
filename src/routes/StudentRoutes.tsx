@@ -3,12 +3,13 @@ import { Route } from 'react-router-dom';
 import StudentProfile from '../components/fonctionnalites/utilisateurs/ProfilEtudiant';
 import StudentAbsenceView from '../components/fonctionnalites/absences/FeuillePresence/absencesEtudiants';
 import StudentGradesView from '../components/fonctionnalites/notes/VueNotesEtudiants';
-import MessageView from '../components/pages/messages/MessagesEtudiants';
 import AssignmentSubmission from '../components/fonctionnalites/utilisateurs/ProfilEtudiant/SoumissionTraveaux';
 import DocumentsAdministratifsEtudiants from '../components/fonctionnalites/utilisateurs/ProfilEtudiant/MesDocuments';
 import FormulaireJustification from '../components/fonctionnalites/absences/FormulaireJustification';
 import CalendrierEtudiant from '../components/fonctionnalites/planification/Calendrier/CalendrierEtudiant';
 import React from 'react';
+import { StudentResources } from '../components/fonctionnalites/utilisateurs/ProfilEtudiant/StudentRessource';
+import StudentMessaging from '../components/messaging/StudentMessaging';
 
 export const StudentRoutes = [
   <Route
@@ -29,7 +30,7 @@ export const StudentRoutes = [
   <Route
     key="etudiant-messages"
     path="/etudiant/messages"
-    element={<MessageView />}
+    element={<StudentMessaging />}
   />,
   <Route
     key="etudiant-traveaux"
@@ -40,6 +41,11 @@ export const StudentRoutes = [
     key="etudiant-documents"
     path="/etudiant/documents"
     element={<DocumentsAdministratifsEtudiants />}
+  />,
+  <Route
+    key="etudiant-ressources"
+    path="/etudiant/ressources"
+    element={<StudentResources />}
   />,
   <Route
     key="etudiant-justifications"

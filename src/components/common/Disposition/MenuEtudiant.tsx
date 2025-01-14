@@ -4,8 +4,8 @@ import {
   Menu,
   Home,
   Calendar,
-  Clock,
-  BookOpen,
+  // Clock,
+  // BookOpen,
   UserX,
   GraduationCap,
   FileText,
@@ -17,6 +17,7 @@ import {
   ClipboardCheck,
   Sun,
   Moon,
+  BookOpen,
 } from 'lucide-react';
 import { useLayout } from '../../../contexts/LayoutContext';
 import { useTheme } from '../../../contexts/ThemeContext';
@@ -58,6 +59,11 @@ const MenuLateralEtudiant = () => {
       icon: <Mail className="w-6 h-6" />,
       label: 'Messages',
       path: '/etudiant/messages',
+    },
+    {
+      icon: <BookOpen className="w-6 h-6" />,
+      label: 'Ressources',
+      path: '/etudiant/ressources',
     },
     {
       icon: <ClipboardCheck className="w-6 h-6" />,

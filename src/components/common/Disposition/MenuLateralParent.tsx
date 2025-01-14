@@ -16,6 +16,7 @@ import {
   Users,
   Sun,
   Moon,
+  BookOpen,
 } from 'lucide-react';
 import { useLayout } from '../../../contexts/LayoutContext';
 import { useTheme } from '../../../contexts/ThemeContext';
@@ -57,6 +58,11 @@ const MenuLateralParent = () => {
       icon: <FileText className="w-6 h-6" />,
       label: 'Documents',
       path: '/parent/documents',
+    },
+    {
+      icon: <BookOpen className="w-6 h-6" />,
+      label: 'Ressources',
+      path: '/parent/ressources',
     },
     {
       icon: <CreditCard className="w-6 h-6" />,

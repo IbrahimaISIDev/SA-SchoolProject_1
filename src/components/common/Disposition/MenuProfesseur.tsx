@@ -64,6 +64,11 @@ const MenuLateralProfesseur = () => {
       path: '/professeur/documents',
     },
     {
+      icon: <BookOpen className="w-6 h-6" />,
+      label: 'Ressources',
+      path: '/professeur/ressources',
+    },
+    {
       icon: <Mail className="w-6 h-6" />,
       label: 'Messages',
       path: '/professeur/messages',

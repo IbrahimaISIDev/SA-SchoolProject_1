@@ -12,12 +12,12 @@ import Parametres from '../components/pages/settings/Parametres';
 import ProfilePage from '../components/pages/Profile';
 import ProchainsCoursPage from '../components/pages/Planification/ProchainsCoursPage';
 import StatistiquesAbsences from '../components/fonctionnalites/absences/StatistiquesAbsences';
-import AdminMessaging from '../components/pages/messages/MessagesAdmins';
 import GestionCours from '../components/pages/Planification/GestionCours';
 import AjouterUtilisateur from '../components/pages/Utilisateurs/Administration';
 import GestionUtilisateurs from '../components/fonctionnalites/utilisateurs/GestionUtilisateurs';
 import ProfilAdministrateur from '../components/fonctionnalites/utilisateurs/ProfilAdministrateur';
 import React from 'react';
+import AdminMessaging from '../components/messaging/AdminMessaging';
 // import GradeReport from '../components/fonctionnalites/notes/Bulletin/indexPremium1';
 
 export const AdminRoutes = [

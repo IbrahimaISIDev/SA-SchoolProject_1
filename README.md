@@ -21,5 +21,7 @@ Une application web moderne pour la gestion pédagogique, développée avec Reac
 ## 📦 Installation
 
 1. Cloner le repository
+
 ```bash
 git clone https://github.com/IbrahimaISIDev/SA-SchoolProject_1.git
+```

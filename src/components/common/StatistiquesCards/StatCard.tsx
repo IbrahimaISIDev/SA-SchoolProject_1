@@ -1,15 +1,21 @@
-// src/components/parent/calendar/StatsPlanningParent.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
 
-type StatCardProps = {
+export type StatCardProps = {
   title: string;
   value: string | number;
   color: 'blue' | 'green' | 'purple';
   icon: React.ReactNode;
+  label?: string; // Pour rendre le label "En direct" personnalisable
 };
 
-const StatCard = ({ title, value, color, icon }: StatCardProps) => {
+const StatCard = ({
+  title,
+  value,
+  color,
+  icon,
+  label = 'En direct', // Valeur par défaut
+}: StatCardProps) => {
   const colors = {
     blue: 'from-blue-500 to-blue-600',
     green: 'from-green-500 to-green-600',
@@ -33,7 +39,7 @@ const StatCard = ({ title, value, color, icon }: StatCardProps) => {
           <div
             className={`px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r ${colors[color]} text-white`}
           >
-            En direct
+            {label}
           </div>
         </dd>
       </div>
