@@ -41,7 +41,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://IbrahimaISIDev.github.io/SA-SchoolProject_1",
   "eslintConfig": {
     "extends": [
       "react-app",
