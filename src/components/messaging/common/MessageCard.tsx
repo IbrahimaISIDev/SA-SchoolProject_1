@@ -1,11 +1,12 @@
 // src/components/messaging/common/MessageCard.jsx
 import React from 'react';
-import { Mail, Star, Trash2, AlertCircle, Reply } from 'lucide-react';
+import { Mail, Star, Trash2, AlertCircle, Reply, Eye } from 'lucide-react';
 import { Card, CardContent } from '../../ui/card';
 
 export const MessageCard = ({
   message,
   onReply,
+  onView, // Ajout de la fonction onView
   showReplyButton = false,
   showActions = true,
 }) => (
@@ -46,6 +47,12 @@ export const MessageCard = ({
           <span className="text-sm text-gray-500">{message.date}</span>
           {showActions && (
             <div className="flex gap-2">
+              <button
+                onClick={() => onView(message)} // Bouton pour afficher le message
+                className="text-gray-400 hover:text-blue-500"
+              >
+                <Eye className="h-5 w-5" />
+              </button>
               {showReplyButton && (
                 <button
                   onClick={() => onReply(message)}

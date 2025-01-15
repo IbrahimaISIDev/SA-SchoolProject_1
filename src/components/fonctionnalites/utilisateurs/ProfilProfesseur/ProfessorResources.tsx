@@ -12,11 +12,17 @@ import {
 } from 'lucide-react';
 import { Card, CardContent } from '../../../ui/card';
 import { useLayout } from '../../../layouts/Layout';
+import { useNavigate } from 'react-router-dom';
 
 export function ProfessorResources() {
   const { sidebarOpen } = useLayout();
   const [selectedCourse, setSelectedCourse] = useState('');
   const [selectedResourceType, setSelectedResourceType] = useState('');
+  const navigate = useNavigate();
+
+  const handleAddResource = () => {
+    navigate('/professeur/resources/add');
+  };
 
   const courses = [
     { id: '1', name: 'Développement Web', class: 'L2 GL' },
@@ -59,7 +65,10 @@ export function ProfessorResources() {
                 Gérez vos supports de cours et exercices
               </p>
             </div>
-            <button className="bg-white text-blue-600 px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-blue-50">
+            <button
+              onClick={handleAddResource}
+              className="bg-white text-blue-600 px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-blue-50"
+            >
               <Plus size={20} />
               Ajouter une ressource
             </button>

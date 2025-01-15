@@ -9,7 +9,7 @@ import ParentDashboard from '../components/fonctionnalites/utilisateurs/ProfilPa
 import ParentGradesView from '../components/fonctionnalites/utilisateurs/ProfilParent/Notes&Bulletins';
 import React from 'react';
 import { ParentResources } from '../components/fonctionnalites/utilisateurs/ProfilParent/ParentResources';
-import { ParentMessaging } from '../components/messaging/ParentMessaging';
+import ParentMessaging from '../components/messaging/ParentMessaging';
 
 export const ParentRoutes = [
   <Route

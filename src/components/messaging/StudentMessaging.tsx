@@ -103,6 +103,9 @@ export default function StudentMessaging() {
   const handleRecipientChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setMessageType(e.target.value);
   };
+  const handleViewMessage = (message) => {
+    console.log('View message:', message);
+  };
 
   return (
     <MessagingLayout
@@ -119,6 +122,7 @@ export default function StudentMessaging() {
               key={message.id}
               message={message}
               onReply={handleReply}
+              onView={() => handleViewMessage(message)} // <-- Add this line
             />
           ))}
         </div>

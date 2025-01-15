@@ -1,83 +1,66 @@
-// src/components/messaging/ParentMessaging.tsx
+// src/components/messaging/ParentMessaging.jsx
 import React, { useState } from 'react';
-import { MessageHeader } from './common/MessageHeader';
-import { MessageTabs } from './common/MessageTabs';
+import { MessagingLayout } from './layout/MessagingLayout';
 import { MessageCard } from './common/MessageCard';
 import { MessageForm } from './common/MessageForm';
 
-const initialMessages = [
-  {
-    id: 1,
-    from: 'Professeur Diallo',
-    sender: 'Professeur Diallo',
-    role: 'Professeur',
-    subject: 'Prochain rendez-vous',
-    content: 'N’oubliez pas la réunion des parents prévue ce vendredi.',
-    date: '14/01/2025',
-    isRead: false,
-    isUrgent: true,
-    classe: 'Classe de CM2',
-  },
-  {
-    id: 2,
-    from: 'Administration',
-    sender: 'Administration',
-    role: 'Administration',
-    subject: 'Paiement des frais',
-    content: 'Veuillez régler les frais de scolarité avant la fin du mois.',
-    date: '10/01/2025',
-    isRead: true,
-    isUrgent: false,
-    classe: null,
-  },
-];
+export default function ParentMessaging() {
+  const [activeTab, setActiveTab] = useState('inbox');
+  const [messages] = useState([
+    {
+      id: 1,
+      from: 'Professeur Diallo',
+      subject: 'Prochain rendez-vous',
+      content: 'N’oubliez pas la réunion des parents ce vendredi.',
+      date: '14/01/2025',
+      isRead: false,
+      isUrgent: true,
+      role: 'Professeur',
+      classe: 'Classe de CM2',
+    },
+    {
+      id: 2,
+      from: 'Administration',
+      subject: 'Paiement des frais',
+      content: 'Veuillez régler les frais de scolarité avant la fin du mois.',
+      date: '10/01/2025',
+      isRead: true,
+      isUrgent: false,
+      role: 'Administration',
+      classe: null,
+    },
+  ]);
 
-export const ParentMessaging = () => {
-  const [activeTab, setActiveTab] = useState<'inbox' | 'new'>('inbox');
-  const [messages, setMessages] = useState(initialMessages);
-  const [selectedMessage, setSelectedMessage] = useState(null);
-
-  const handleTabChange = (tab: 'inbox' | 'new') => {
-    setActiveTab(tab);
-    setSelectedMessage(null);
-  };
-
-  const handleReply = (message) => {
+  const handleReply = (messageId) => {
+    console.log(`Répondre au message ID: ${messageId}`);
     setActiveTab('new');
-    setSelectedMessage(message);
   };
 
-  const handleNewMessage = () => {
-    setActiveTab('new');
-    setSelectedMessage(null);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Ajoutez ici la logique pour envoyer un message
-    alert('Message envoyé avec succès !');
+  const handleSubmit = (formData) => {
+    console.log('Formulaire envoyé avec les données :', formData);
     setActiveTab('inbox');
+  };
+  const handleViewMessage = (message) => {
+    console.log('View message:', message);
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <MessageHeader
-        title="Messagerie des Parents"
-        subtitle="Gérez vos communications avec l'école"
-        onNewMessage={handleNewMessage}
-      />
-
-      <MessageTabs activeTab={activeTab} onTabChange={handleTabChange} />
-
+    <MessagingLayout
+      title="Messagerie des Parents"
+      subtitle="Gérez vos communications avec l'école"
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      onNewMessage={() => setActiveTab('new')}
+    >
       {activeTab === 'inbox' && (
         <div className="space-y-4">
           {messages.map((message) => (
             <MessageCard
               key={message.id}
               message={message}
-              onReply={handleReply}
-              showReplyButton
-              showActions
+              onReply={() => handleReply(message.id)}
+              onView={() => handleViewMessage(message)} // <-- Add this line
+              showReplyButton={message.role === 'Professeur'}
             />
           ))}
         </div>
@@ -85,16 +68,14 @@ export const ParentMessaging = () => {
 
       {activeTab === 'new' && (
         <MessageForm
-          recipients={selectedMessage ? [selectedMessage.sender] : []}
           messageTypes={[
-            { value: 'general', label: 'Général' },
-            { value: 'urgent', label: 'Urgent' },
+            { value: 'rendez-vous', label: 'Demande de rendez-vous' },
+            { value: 'paiement', label: 'Question sur les frais' },
           ]}
-          onSubmit={handleSubmit}
           showUrgentOption
-          showReadConfirmation
+          onSubmit={handleSubmit}
         />
       )}
-    </div>
+    </MessagingLayout>
   );
-};
+}

@@ -57,6 +57,9 @@ export default function AdminMessaging() {
     // Ajoutez ici votre logique d'envoi (API, stockage, etc.)
     setActiveTab('inbox'); // Retourne à la boîte de réception après l'envoi
   };
+  const handleViewMessage = (message) => {
+    console.log('View message:', message);
+  };
 
   return (
     <MessagingLayout
@@ -73,6 +76,9 @@ export default function AdminMessaging() {
               key={message.id}
               message={message}
               onReply={() => handleReply(message.id)} // Gestion de la réponse
+              onView={() => handleViewMessage(message)}
+              showReplyButton={true}
+              showActions={true}
             />
           ))}
         </div>

@@ -1,24 +1,13 @@
-// src/components/messaging/ProfessorMessaging.tsx
 import React, { useState } from 'react';
+import { MessagingLayout } from './layout/MessagingLayout';
 import { MessageCard } from './common/MessageCard';
 import { MessageForm } from './common/MessageForm';
-import { MessageHeader } from './common/MessageHeader';
-import { MessageTabs } from './common/MessageTabs';
 
-const ProfessorMessaging = () => {
-  const classes = [
-    { id: 1, name: 'L2 RI' },
-    { id: 2, name: 'L3 GL' },
-  ];
+export default function ProfessorMessaging() {
+  const [activeTab, setActiveTab] = useState<'inbox' | 'new' | 'view'>('inbox');
+  const [selectedMessage, setSelectedMessage] = useState(null);
 
-  const students = [
-    { id: 1, name: 'Ibrahima Diallo', classe: 'L2 RI' },
-    { id: 2, name: 'Fatou Diallo', classe: 'L2 RI' },
-    { id: 3, name: 'Lamine Goudiaby', classe: 'L3 GL' },
-  ];
-
-  const [activeTab, setActiveTab] = useState<'inbox' | 'new'>('inbox');
-  const [messages, setMessages] = useState([
+  const [messages] = useState([
     {
       id: 1,
       from: 'Élève 1',
@@ -57,44 +46,81 @@ const ProfessorMessaging = () => {
     },
   ]);
 
-  const handleReply = (message) => {
-    console.log('Répondre au message', message);
-    // Logique pour répondre au message
+  const [classes] = useState([
+    { id: 1, name: 'L2 RI' },
+    { id: 2, name: 'L3 GL' },
+  ]);
+
+  const [students] = useState([
+    { id: 1, name: 'Ibrahima Diallo', classe: 'L2 RI' },
+    { id: 2, name: 'Fatou Diallo', classe: 'L2 RI' },
+    { id: 3, name: 'Lamine Goudiaby', classe: 'L3 GL' },
+  ]);
+
+  const handleReply = (messageId) => {
+    console.log(`Répondre au message ID: ${messageId}`);
+    setActiveTab('new');
   };
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
+  const handleViewMessage = (message) => {
+    setSelectedMessage(message);
+    setActiveTab('view');
   };
 
-  const handleSubmitMessage = (event) => {
-    event.preventDefault();
-    // Logique pour envoyer un nouveau message
+  const handleSubmit = (formData) => {
+    console.log('Formulaire envoyé avec les données :', formData);
+    setActiveTab('inbox');
   };
 
-  // Fonction pour récupérer les étudiants d'une classe spécifique
-  const getStudentsByClass = (className) => {
-    return students.filter((student) => student.classe === className);
-  };
+  const getStudentsByClass = (className) =>
+    students.filter((student) => student.classe === className);
 
   return (
-    <div className="container mx-auto p-6">
-      <MessageHeader
-        title="Messagerie Professeur"
-        subtitle="Gérez vos messages avec vos élèves et l'administration"
-        onNewMessage={() => setActiveTab('new')}
-      />
-      <MessageTabs activeTab={activeTab} onTabChange={handleTabChange} />
-
+    <MessagingLayout
+      title="Messagerie Professeur"
+      subtitle="Gérez vos messages avec vos élèves et l'administration"
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      onNewMessage={() => setActiveTab('new')}
+    >
       {activeTab === 'inbox' && (
-        <div>
+        <div className="space-y-4">
           {messages.map((message) => (
             <MessageCard
               key={message.id}
               message={message}
-              onReply={handleReply}
-              showReplyButton={message.role !== 'Administration'} // Ne pas permettre la réponse aux messages de l'administration
+              onView={() => handleViewMessage(message)}
+              onReply={() => handleReply(message.id)}
+              showReplyButton={message.role !== 'Administration'}
             />
           ))}
+        </div>
+      )}
+
+      {activeTab === 'view' && selectedMessage && (
+        <div className="p-6 bg-white rounded-lg shadow">
+          <h2 className="text-xl font-bold">{selectedMessage.subject}</h2>
+          <p className="text-sm text-gray-500">
+            De : {selectedMessage.from} | Classe :{' '}
+            {selectedMessage.classe || 'N/A'}
+          </p>
+          <p className="mt-4">{selectedMessage.content}</p>
+          <div className="mt-6">
+            <button
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              onClick={() => setActiveTab('inbox')}
+            >
+              Retour à la liste
+            </button>
+            {selectedMessage.role !== 'Administration' && (
+              <button
+                className="ml-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                onClick={() => handleReply(selectedMessage.id)}
+              >
+                Répondre
+              </button>
+            )}
+          </div>
         </div>
       )}
 
@@ -103,20 +129,18 @@ const ProfessorMessaging = () => {
           recipients={classes.map((classe) => ({
             value: classe.name,
             label: classe.name,
-            students: getStudentsByClass(classe.name), // Récupérer les étudiants pour chaque classe
+            students: getStudentsByClass(classe.name),
           }))}
           messageTypes={[
             { value: 'demande', label: 'Demande' },
             { value: 'question', label: 'Question' },
             { value: 'réunion', label: 'Réunion' },
           ]}
-          onSubmit={handleSubmitMessage}
-          showUrgentOption={true}
-          showReadConfirmation={true}
+          onSubmit={handleSubmit}
+          showUrgentOption
+          showReadConfirmation
         />
       )}
-    </div>
+    </MessagingLayout>
   );
-};
-
-export default ProfessorMessaging;
+}

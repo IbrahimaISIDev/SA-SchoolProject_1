@@ -11,6 +11,7 @@ import CalendrierProfesseur from '../components/fonctionnalites/planification/Ca
 import React from 'react';
 import { ProfessorResources } from '../components/fonctionnalites/utilisateurs/ProfilProfesseur/ProfessorResources';
 import ProfessorMessaging from '../components/messaging/ProfessorMessaging';
+import AddProfessorResource from '../components/fonctionnalites/utilisateurs/ProfilProfesseur/AddProfessorResources';
 
 export const TeacherRoutes = [
   <Route
@@ -63,4 +64,5 @@ export const TeacherRoutes = [
     path="/professeur/emploi-du-temps"
     element={<CalendrierProfesseur />}
   />,
+  <Route path="/professeur/resources/add" element={<AddProfessorResource />} />,
 ];
